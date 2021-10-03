@@ -1,0 +1,36 @@
+{
+  "name": "mern-store",
+  "version": "1.0.0",
+  "description": "Fullstack express-react app",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "fullstack",
+    "mern",
+    "mongoose",
+    "node",
+    "validation",
+    "auth",
+    "routes"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.8",
+    "multer": "^1.4.3"
+  }
+}
