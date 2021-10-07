@@ -1,7 +1,14 @@
-import {ICartProduct} from "../Cart/cart";
+import {IProduct} from "../Products/products";
 
 export interface IOrders {
-    id: string
-    orders: ICartProduct,
+    _id: string
+    products: IOrderItem[],
     orderTime: string,
+}
+
+export interface IOrderItem {
+    id: string,
+    product: IProduct,
+    quantity: number,
+    total: number,
 }

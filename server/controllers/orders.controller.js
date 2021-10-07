@@ -3,7 +3,8 @@ const OrdersService = require('./../services/orders.service')
 class OrdersController {
     async addOrderProducts(req, res) {
         try {
-            res.json(await OrdersService.addOrder(req.params.id))
+            await OrdersService.addOrder(req.params.id)
+            res.status(201).json({message: "Products was successfully ordered "})
         } catch (e) {
             res.status(500).json({message: e.message})
         }
