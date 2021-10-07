@@ -1,19 +1,19 @@
 const Cart = require('./../models/cart.model')
 
 class CartService {
-    async addCartProduct(userId, {price, quantity, productId}) {
+    async addCartProduct(userId, {price, quantity, product}) {
         let cart = await Cart.findOne({userId})
         let total = price * quantity
 
         if (!cart) {
             return await Cart.create({
                 userId,
-                products: [{productId, quantity, total}]
+                products: [{product, quantity, total}]
             })
         } else {
-            let itemIndex = cart.products.findIndex(p => p.productId == productId)
+            let itemIndex = cart.products.findIndex(p => p.product == product)
             if (itemIndex === -1) {
-                cart.products.push({productId, quantity, total})
+                cart.products.push({product, quantity, total})
             } else {
                 cart.products[itemIndex].quantity++;
                 cart.products[itemIndex].total = price * cart.products[itemIndex].quantity
@@ -23,7 +23,7 @@ class CartService {
     }
 
     async getCart(userId) {
-        return Cart.findOne({userId}).populate('products.productId')
+        return Cart.findOne({userId}).populate('products.product')
     }
 
     async deleteCartProduct(userId, productCartId) {

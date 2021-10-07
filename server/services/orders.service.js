@@ -8,18 +8,18 @@ class OrdersService {
         if (!orders) {
             return await Orders.create({
                 userId,
-                orders: [{cartId: cart.id}]
+                orders: [{cart: cart.id}]
             })
         } else {
-            orders.orders.push({cartId: cart.id})
+            orders.orders.push({cart: cart.id})
         }
-        await Cart.deleteOne({userId})
+        // await Cart.deleteOne({userId})
         return await orders.save()
     }
 
 
     async getOrders(userId) {
-        return Orders.findOne({userId}).populate('orders.cartId')
+        return Orders.findOne({userId}).populate('orders.cart')
     }
 
     async updateOrder() {
