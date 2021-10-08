@@ -17,7 +17,7 @@ const ProductsList = () => {
     }, [])
     return (
         <Grid container spacing={4}>
-            {products.map(product => <ProductItem key={product.id} {...product}/>)}
+            {products.map(product => <ProductItem key={product._id} {...product}/>)}
         </Grid>
     );
 };

@@ -41,7 +41,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                 </Typography>
                 <Divider/>
                 <List sx={{paddingLeft: 2}}>
-                    {false ?
+                    {true ?
                         <>
                             <NavLink to="/profile">
                                 <ListItem button style={{padding: '1rem .2rem'}}>

@@ -54,7 +54,7 @@ export default function Header() {
                             </>
                             :
                             <>
-                                {false ?
+                                {isAuth ?
                                 <>
                                     <IconButton
                                         onClick={() => setIsInputOpen((prev) => !prev)}
