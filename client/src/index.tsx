@@ -5,13 +5,17 @@ import App from './App';
 import {ThemeProvider} from "@mui/material";
 import {theme} from "./theme/theme";
 import {BrowserRouter as Router} from "react-router-dom";
+import {Provider} from 'react-redux'
+import {store} from "./redux/store";
 
 ReactDOM.render(
-    <Router>
-        <ThemeProvider theme={theme}>
-            <App />
-        </ThemeProvider>
-    </Router>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router>
+            <ThemeProvider theme={theme}>
+                <App/>
+            </ThemeProvider>
+        </Router>
+    </Provider>,
+    document.getElementById('root')
 );
 

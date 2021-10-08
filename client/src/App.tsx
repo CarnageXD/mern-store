@@ -4,7 +4,7 @@ import ProductsPage from "./pages/ProductsPage";
 import {useRoutes} from "./routes/routes";
 
 const App = () => {
-    const routes = useRoutes(true)
+    const routes = useRoutes(false)
     return (
         <MainLayout>
             {routes}

@@ -54,28 +54,36 @@ export default function Header() {
                             </>
                             :
                             <>
-                                <IconButton
-                                    onClick={() => setIsInputOpen((prev) => !prev)}
-                                    color="inherit"
-                                >
-                                    <SearchOutlined/>
-                                </IconButton>
-                                <NavLink to="/profile">
+                                {false ?
+                                <>
                                     <IconButton
+                                        onClick={() => setIsInputOpen((prev) => !prev)}
                                         color="inherit"
                                     >
-                                        <AccountCircleOutlined/>
+                                        <SearchOutlined/>
                                     </IconButton>
-                                </NavLink>
+                                    <NavLink to="/profile">
+                                        <IconButton
+                                            color="inherit"
+                                        >
+                                            <AccountCircleOutlined/>
+                                        </IconButton>
+                                    </NavLink>
+                                    <NavLink to='/cart'>
+                                        <IconButton
+                                            color="inherit"
+                                        >
+                                            <ShoppingCartOutlined/>
+                                        </IconButton>
+                                    </NavLink>
+                                </>
+                                :
+                                    <NavLink to="/auth">
+                                        <Typography sx={{display: {xs: "none", md: "block"}}} variant={"h5"}>Login</Typography>
+                                    </NavLink>
+                                }
                             </>
                     }
-                    <NavLink to='/cart'>
-                        <IconButton
-                            color="inherit"
-                        >
-                            <ShoppingCartOutlined/>
-                        </IconButton>
-                    </NavLink>
                     <IconButton
                         onClick={toggleDrawer}
                         color="inherit"
