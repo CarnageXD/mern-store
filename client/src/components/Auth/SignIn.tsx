@@ -3,27 +3,38 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IToggleAuth} from "../../types/Auth/auth";
+import {IToggleAuth, LoginData} from "../../types/Auth/auth";
+import {useUserLoginMutation} from '../../redux/features/api/authApi'
+import {useState} from "react";
+import {useDispatch} from 'react-redux'
+import {setCredentials} from "../../redux/features/authSlice";
+import {useAppDispatch} from "../../hooks/redux-hooks";
 
 const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const [loginUser, {isLoading}] = useUserLoginMutation()
+    const [userData, setUserData] = useState<LoginData>({} as LoginData)
+    const dispatch = useAppDispatch()
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        setUserData({...userData, [e.target.name]: e.target.value})
+    }
+
+    const handleLogin = async () => {
+       const data = await loginUser({
+            email: userData.email,
+            password: userData.password
+        }).unwrap()
+
+        dispatch(setCredentials(data))
+    }
+    if (isLoading) return <h1>Loading...</h1>
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -40,8 +51,9 @@ const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
+                            onChange={handleChange}
                             margin="normal"
                             required
                             fullWidth
@@ -52,6 +64,7 @@ const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
                             autoFocus
                         />
                         <TextField
+                            onChange={handleChange}
                             margin="normal"
                             required
                             fullWidth
@@ -62,7 +75,7 @@ const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
                             autoComplete="current-password"
                         />
                         <Button
-                            type="submit"
+                            onClick={handleLogin}
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
@@ -71,7 +84,7 @@ const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link onClick={toggle} href="#" variant="body2">
+                                <Link sx={{cursor: "pointer"}} onClick={toggle} variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

@@ -16,9 +16,10 @@ import {useState} from "react";
 import {Divider, InputBase} from "@mui/material";
 import Drawer from "../Drawer/Drawer";
 import {NavLink} from 'react-router-dom';
+import {useAppSelector} from "../../hooks/redux-hooks";
 
 export default function Header() {
-    const isAuth = true;
+    const isAuth = !!(useAppSelector(state => state.auth.token));
     const [isInputOpen, setIsInputOpen] = useState(false)
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const toggleDrawer = () => setIsDrawerOpen((prev) => !prev)

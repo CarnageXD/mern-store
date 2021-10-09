@@ -15,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import {Typography} from "@mui/material";
 import {NavLink} from 'react-router-dom';
+import {useAppSelector} from "../../hooks/redux-hooks";
 
 type TemporaryDrawerType = {
     isOpen: boolean
@@ -22,6 +23,7 @@ type TemporaryDrawerType = {
 }
 
 const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) => {
+    const isAuth = !!(useAppSelector(state => state.auth.token));
     return (
         <Drawer
             open={isOpen}
@@ -41,7 +43,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                 </Typography>
                 <Divider/>
                 <List sx={{paddingLeft: 2}}>
-                    {true ?
+                    {isAuth ?
                         <>
                             <NavLink to="/profile">
                                 <ListItem button style={{padding: '1rem .2rem'}}>

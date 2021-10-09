@@ -11,19 +11,28 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IToggleAuth} from "../../types/Auth/auth";
+import {IToggleAuth, RegisterData} from "../../types/Auth/auth";
+import {useUserRegisterMutation} from '../../redux/features/api/authApi'
+import {useState} from "react";
 
 const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    const [userData, setUserData] = useState<RegisterData>({} as RegisterData)
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        setUserData({...userData, [e.target.name]: e.target.value})
     };
 
+    const [registerUser, {isLoading}] = useUserRegisterMutation()
+
+    const handleRegister = () => {
+        console.log({...userData})
+        registerUser({
+            ...userData, role: "user"
+        }).unwrap()
+    }
+
+    if (isLoading) return <h1>Loading...</h1>
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -40,21 +49,23 @@ const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    autoComplete="fname"
-                                    name="firstName"
+                                    onChange={handleChange}
+                                    autoComplete="name"
+                                    name="name"
                                     required
                                     fullWidth
-                                    id="firstName"
+                                    id="name"
                                     label="Name"
                                     autoFocus
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={handleChange}
                                     required
                                     fullWidth
                                     id="email"
@@ -65,6 +76,7 @@ const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={handleChange}
                                     required
                                     fullWidth
                                     name="password"
@@ -76,7 +88,7 @@ const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
                             </Grid>
                         </Grid>
                         <Button
-                            type="submit"
+                            onClick={handleRegister}
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
@@ -85,7 +97,7 @@ const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link onClick={toggle} href="#" variant="body2">
+                                <Link sx={{cursor: "pointer"}} onClick={toggle} variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
