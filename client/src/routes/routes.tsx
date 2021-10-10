@@ -34,6 +34,9 @@ export const useRoutes = (isAuthenticated: boolean) => {
             <Route path='/auth'>
                 <AuthPage/>
             </Route>
+            <Route path='/detailed/:id'>
+                <DetailedProductPage/>
+            </Route>
             <Redirect to='/' />
         </Switch>
     )

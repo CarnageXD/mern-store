@@ -1,8 +1,7 @@
 import React from 'react';
 import ProductsList from "../components/Products/ProductsList";
-import {Box, IconButton, Pagination, Typography} from "@mui/material";
+import {Box, Pagination, Typography} from "@mui/material";
 import PromotionSlider from "../components/PromotionSlider";
-import {ArrowDownward, FilterListOutlined} from "@mui/icons-material";
 
 const ProductsPage = () => {
     return (

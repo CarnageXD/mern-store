@@ -20,7 +20,7 @@ class CartController {
 
     async deleteCartProduct(req, res) {
         try {
-            await CartService.deleteCartProduct(req.params.id)
+            await CartService.deleteCartProduct(req.params.id, req.body)
             res.json('Product was successfully deleted from cart')
         } catch (e) {
             res.status(500).json({message: e.message})

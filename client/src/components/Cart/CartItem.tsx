@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import {Box, Button, Typography} from "@mui/material";
 import {Add, Delete, Remove} from "@mui/icons-material";
 import {ICartProduct} from "../../types/Cart/cart";
+import {useDeleteCartProductMutation} from "../../redux/features/api/mainApi";
+import {useAppSelector} from "../../hooks/redux-hooks";
 
-const CartItem: React.FC<ICartProduct> = ({product,quantity,total, id}) => {
+const CartItem: React.FC<ICartProduct> = ({product,quantity,total}) => {
     const [cartQuantity, setCartQuantity] = useState(quantity)
+    const userId = useAppSelector(state => state.auth.id)
+    const [deleteCartProduct, {isLoading}] = useDeleteCartProductMutation()
     // const [price, setPrice] = useState(5.45)
-
     const plus = () => {
         if (cartQuantity < 10) setCartQuantity((prev) => ++prev)
     }
@@ -15,6 +18,10 @@ const CartItem: React.FC<ICartProduct> = ({product,quantity,total, id}) => {
         if (cartQuantity > 1) setCartQuantity((prev) => --prev)
     }
 
+    const handleDeleteProduct = () => {
+        deleteCartProduct({id: product._id, userId})
+    }
+    if (isLoading) return <h1>Loading...</h1>
     return (
         <Box mb={2} mt={2} display={"flex"}  justifyContent={"space-between"} width={"100%"} >
             <Box display={"flex"}>
@@ -33,7 +40,7 @@ const CartItem: React.FC<ICartProduct> = ({product,quantity,total, id}) => {
                 </Box>
             </Box>
             <Box display={"flex"} justifyContent={"space-between"} flexDirection={"column"}>
-                <Button>
+                <Button onClick={handleDeleteProduct}>
                     <Delete/>
                 </Button>
                 <Typography variant={"h5"}>{product.price * cartQuantity}$</Typography>

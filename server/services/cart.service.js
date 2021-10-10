@@ -1,9 +1,12 @@
 const Cart = require('./../models/cart.model')
+const Product = require('./../models/product.model')
 
 class CartService {
-    async addCartProduct(userId, {price, quantity, product}) {
+    async addCartProduct(userId, {total = 1, quantity = 1, product}) {
         let cart = await Cart.findOne({userId})
-        let total = price * quantity
+        let productData = await Product.findOne({_id: product})
+        let price = productData.price
+        total = price * quantity
 
         if (!cart) {
             return await Cart.create({
@@ -31,7 +34,7 @@ class CartService {
         if (!cart) {
             throw new Error('This cart does not exists')
         }
-        await Cart.updateOne({$pull: {"products": {productCartId}}})
+        await Cart.updateOne({$pull: {"products": {product: {_id: productCartId.product}}}})
     }
 }
 

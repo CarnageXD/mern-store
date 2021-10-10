@@ -6,3 +6,9 @@ export interface ICartProduct {
     quantity: number,
     total: number,
 }
+
+export interface  ICartResponse {
+    userId: string,
+    id: string,
+    products: ICartProduct[]
+}

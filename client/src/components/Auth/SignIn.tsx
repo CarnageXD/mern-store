@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {IToggleAuth, LoginData} from "../../types/Auth/auth";
-import {useUserLoginMutation} from '../../redux/features/api/authApi'
+import {useUserLoginMutation} from '../../redux/features/api/mainApi'
 import {useState} from "react";
 import {useDispatch} from 'react-redux'
 import {setCredentials} from "../../redux/features/authSlice";

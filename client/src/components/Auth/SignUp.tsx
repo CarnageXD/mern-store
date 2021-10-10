@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {IToggleAuth, RegisterData} from "../../types/Auth/auth";
-import {useUserRegisterMutation} from '../../redux/features/api/authApi'
+import {useUserRegisterMutation} from '../../redux/features/api/mainApi'
 import {useState} from "react";
 
 const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
