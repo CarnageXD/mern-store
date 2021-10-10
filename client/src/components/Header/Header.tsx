@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
     AccountCircleOutlined,
-    ArrowBackIos,
+    ArrowBackIos, ExitToAppOutlined,
     SearchOutlined,
     ShoppingBagOutlined,
     ShoppingCartOutlined
@@ -16,13 +16,26 @@ import {useState} from "react";
 import {Divider, InputBase} from "@mui/material";
 import Drawer from "../Drawer/Drawer";
 import {NavLink} from 'react-router-dom';
-import {useAppSelector} from "../../hooks/redux-hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
+import {setCredentials} from "../../redux/features/authSlice";
 
 export default function Header() {
     const isAuth = !!(useAppSelector(state => state.auth.token));
+    const dispatch = useAppDispatch()
     const [isInputOpen, setIsInputOpen] = useState(false)
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const toggleDrawer = () => setIsDrawerOpen((prev) => !prev)
+
+    const handleLogout = () => {
+        localStorage.removeItem('authData')
+        dispatch(setCredentials({
+            name: null,
+            id: null,
+            token: null,
+            role: null
+        }))
+    }
+
     return (
         <Box sx={{flexGrow: 1, mb: 2}}>
             <AppBar position="static" elevation={0}>
@@ -75,6 +88,15 @@ export default function Header() {
                                             color="inherit"
                                         >
                                             <ShoppingCartOutlined/>
+                                        </IconButton>
+                                    </NavLink>
+                                    <NavLink to="/">
+                                        <IconButton
+                                            sx={{display: {xs: 'none !important', md: 'flex !important'}}}
+                                            onClick={handleLogout}
+                                            color="inherit"
+                                        >
+                                            <ExitToAppOutlined />
                                         </IconButton>
                                     </NavLink>
                                 </>

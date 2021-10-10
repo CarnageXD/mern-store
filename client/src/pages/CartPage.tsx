@@ -15,7 +15,7 @@ const CartPage = () => {
         <>
             <Typography sx={{display: {xs: "none", md: "block"}}} variant='h4'>Cart</Typography>
             {
-                data.products.length != 0
+                data && data.products.length != 0
                     ?
                     <Cart products={data.products}/>
                     :

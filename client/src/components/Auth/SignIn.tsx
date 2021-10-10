@@ -31,8 +31,9 @@ const SignIn:React.FC<IToggleAuth> = ({toggle}) => {
             email: userData.email,
             password: userData.password
         }).unwrap()
-
+        console.log(data)
         dispatch(setCredentials(data))
+        localStorage.setItem('authData', JSON.stringify(data))
     }
     if (isLoading) return <h1>Loading...</h1>
     return (

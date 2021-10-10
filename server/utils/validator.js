@@ -5,11 +5,6 @@ const validationRules = {
         check('email', 'Incorrect email').isEmail(),
         check('password', 'Minimum password characters is 6 symbols').isLength({ min: 6 }),
         check('name', 'Maximum name size is 36').isLength({ max: 36 }),
-        oneOf([
-            check('role', 'Incorrect role').equals('user'),
-            check('role', 'Incorrect role').equals('admin'),
-        ])
-
     ],
     login: [
         check('email', 'Incorrect email').normalizeEmail().isEmail(),

@@ -8,14 +8,15 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import {
     AccountCircleOutlined,
-    AssignmentOutlined,
+    AssignmentOutlined, ExitToAppOutlined,
     HelpOutlineOutlined,
     LoginOutlined,
     ShoppingBagOutlined, ShoppingCartOutlined
 } from "@mui/icons-material";
 import {Typography} from "@mui/material";
 import {NavLink} from 'react-router-dom';
-import {useAppSelector} from "../../hooks/redux-hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
+import {setCredentials} from "../../redux/features/authSlice";
 
 type TemporaryDrawerType = {
     isOpen: boolean
@@ -24,6 +25,16 @@ type TemporaryDrawerType = {
 
 const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) => {
     const isAuth = !!(useAppSelector(state => state.auth.token));
+    const dispatch = useAppDispatch()
+        const handleLogout = () => {
+        localStorage.removeItem('authData')
+        dispatch(setCredentials({
+            name: null,
+            id: null,
+            token: null,
+            role: null
+        }))
+    }
     return (
         <Drawer
             open={isOpen}
@@ -45,7 +56,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                 <List sx={{paddingLeft: 2}}>
                     {isAuth ?
                         <>
-                            <NavLink to="/profile">
+                            <NavLink to="/profile" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
                                         <AccountCircleOutlined/>
@@ -55,7 +66,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/cart">
+                            <NavLink to="/cart" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
                                         <ShoppingCartOutlined/>
@@ -65,7 +76,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/support">
+                            <NavLink to="/support" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
                                         <HelpOutlineOutlined/>
@@ -75,10 +86,20 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
+                            <NavLink to="/" onClick={toggleDrawer}>
+                                <ListItem onClick={handleLogout} button style={{padding: '1rem .2rem'}}>
+                                    <ListItemIcon>
+                                        <ExitToAppOutlined/>
+                                    </ListItemIcon>
+                                    <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
+                                        Logout
+                                    </ListItemText>
+                                </ListItem>
+                            </NavLink>
                         </>
                         :
                         <>
-                            <NavLink to="/auth">
+                            <NavLink to="/auth" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
                                         <LoginOutlined/>
@@ -88,7 +109,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/support">
+                            <NavLink to="/support" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
                                         <HelpOutlineOutlined/>
@@ -100,7 +121,6 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                             </NavLink>
                         </>
                     }
-
                 </List>
             </Box>
         </Drawer>

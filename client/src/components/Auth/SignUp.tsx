@@ -26,9 +26,8 @@ const SignUp:React.FC<IToggleAuth> = ({toggle}) => {
     const [registerUser, {isLoading}] = useUserRegisterMutation()
 
     const handleRegister = () => {
-        console.log({...userData})
         registerUser({
-            ...userData, role: "user"
+            ...userData
         }).unwrap()
     }
 

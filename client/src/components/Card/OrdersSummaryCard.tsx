@@ -3,7 +3,7 @@ import {Box, Card, CardContent, Typography} from "@mui/material";
 
 const OrdersSummaryCard = () => {
     return (
-        <Box mt={2} mb={4} width="320px">
+        <Box mt={2} mb={4} width="290px">
             <Card variant="outlined">
                 <Box p="10px 10px 0 10px" bgcolor="#fafafa">
                     <CardContent>

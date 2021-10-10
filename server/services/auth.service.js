@@ -1,13 +1,15 @@
 const User = require('./../models/user.model')
+const Role = require('./../models/role.model')
 const bcrypt = require('bcryptjs')
-const jwtToken = require('jsonwebtoken')
+const tokenGenerator = require('./../utils/tokenGenerator')
 
 class AuthService {
-    async register({ email, password, name, role }) {
+    async register({ email, password, name }) {
         const candidate = await User.findOne({email})
         if (candidate) throw new Error('This email is already exists')
         const hashedPassword = await bcrypt.hash(password, 12)
-        await User.create({name, email, password: hashedPassword, role})
+        const userRole = await Role.findOne({value: "USER"})
+        await User.create({name, email, password: hashedPassword, roles: [userRole.value]})
     }
     async login({ email, password }) {
         const user = await User.findOne({ email })
@@ -22,12 +24,9 @@ class AuthService {
         }
 
         if (user && isMatch) {
-            const token = jwtToken.sign(
-                { userId: user.id },
-                process.env.SECRET,
-                { expiresIn: '1h' }
-            )
-            return { id: user.id, token, role: user.role, name: user.name }
+            const token = tokenGenerator(user._id, user.roles, user.name)
+
+            return {token, name: user.name, id: user._id, roles: user.roles}
         }
     }
 }
