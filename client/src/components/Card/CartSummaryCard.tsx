@@ -1,5 +1,7 @@
 import React from 'react';
 import {Box, Button, Card, CardContent, Typography} from "@mui/material";
+import {useAddCartProductMutation} from "../../redux/features/api/mainApi";
+import {useAppSelector} from "../../hooks/redux-hooks";
 
 const CartSummaryCard = () => {
     return (

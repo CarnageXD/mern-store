@@ -9,7 +9,6 @@ import {
     AccountCircleOutlined,
     ArrowBackIos, ExitToAppOutlined,
     SearchOutlined,
-    ShoppingBagOutlined,
     ShoppingCartOutlined
 } from "@mui/icons-material";
 import {useState} from "react";

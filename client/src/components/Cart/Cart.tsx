@@ -1,16 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import CartItem from "./CartItem";
-import CartSummaryCard from "../Card/CartSummaryCard";
-import {Box} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {ICartProduct} from "../../types/Cart/cart";
+import {useAppSelector} from "../../hooks/redux-hooks";
+import {useAddOrderMutation} from "../../redux/features/api/mainApi";
 
-const Cart:React.FC<{products: ICartProduct[]}> = ({products}) => {
+const Cart:React.FC<{products: ICartProduct[], cartId: string}> = ({products, cartId}) => {
+    const userId = useAppSelector(state => state.auth.id)
+    const [addOrder] = useAddOrderMutation()
+    const handleAddingOrder = () => {
+        console.log(cartId, '...', userId)
+        addOrder({cartId, userId})
+    }
     return (
-        <Box display="flex" justifyContent="space-between" flexDirection={{xs: "column", md: "row"}}>
+        <Box display="flex" justifyContent="space-between" alignItems={"flex-end"} flexDirection={{xs: "column"}}>
             <Box display="flex" flexDirection="column" width={"100%"} mr={1}>
                 {products.map(product => <CartItem key={product.id} {...product}/>)}
             </Box>
-            <CartSummaryCard/>
+            <Button
+                onClick={handleAddingOrder}
+                sx={{width: 150, mt: 2, mb: 2}}
+                variant={"outlined"}
+            >Make order</Button>
         </Box>
     )
 

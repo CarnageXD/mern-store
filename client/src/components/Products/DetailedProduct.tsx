@@ -8,7 +8,7 @@ import {useAppSelector} from "../../hooks/redux-hooks";
 const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
     const userId = useAppSelector(state => state.auth.id)
     const {data: product = {} as IProduct, isFetching} = useGetProductQuery(id)
-    const [addProduct, {}] = useAddCartProductMutation()
+    const [addProduct] = useAddCartProductMutation()
 
     const handleAddingProduct = () => {
         console.log(id, '...', userId)

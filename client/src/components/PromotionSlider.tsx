@@ -20,7 +20,7 @@ const PromotionSlider = () => {
     return (
        <Carousel>
            {items.map(item => (
-                   <Box
+                   <Box key={item.image}
                        sx={{
                            height: {xs: "35vh", sm: "70vh", md: "86vh"},
                            backgroundImage: `url(${item.image})`,

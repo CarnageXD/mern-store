@@ -28,7 +28,7 @@ const Order: React.FC<IOrders> = ({orderTime, products, _id}) => {
                 <List component="div" disablePadding>
                     <ListItem sx={{flexDirection: "column"}}  button>
                         {
-                            products.map(product => <OrderItem {...product}/>)
+                            products.map(product => <OrderItem key={product.id} {...product}/>)
                         }
                     </ListItem>
                 </List>

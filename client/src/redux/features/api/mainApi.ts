@@ -1,11 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 import {RegisterData, LoginData, AuthState} from "../../../types/Auth/auth";
 import {IProduct} from "../../../types/Products/products";
-import {ICartProduct, ICartResponse} from "../../../types/Cart/cart";
+import {ICartResponse} from "../../../types/Cart/cart";
+import {IOrders} from "../../../types/Orders/orders";
 
 export const mainApi = createApi({
     reducerPath: 'mainApi',
-    tagTypes: ['Cart'],
+    tagTypes: ['Cart', 'Orders'],
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5000/api/'}),
     endpoints: (build) => ({
         //AUTH
@@ -23,6 +24,7 @@ export const mainApi = createApi({
                 body
             })
         }),
+        //CART
         getCart: build.query<ICartResponse, string | null>({
             query: (id) => `cart/${id}`,
             providesTags: (result) =>
@@ -63,6 +65,25 @@ export const mainApi = createApi({
                 body
             })
         }),
+        //ORDERS
+        getOrders: build.query<IOrders[], string | null>({
+            query: (id) => `orders/${id}`,
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ _id }) => ({ type: 'Orders' as const, _id })),
+                        { type: 'Orders', id: 'LIST' },
+                    ]
+                    : [{ type: 'Orders', id: 'LIST' }],
+        }),
+        addOrder: build.mutation({
+            query: (payload) => ({
+                url: `orders/create/${payload.userId}`,
+                method: 'POST',
+                body: {cardId: payload.cartId}
+            }),
+            invalidatesTags: [{type: 'Cart', id: 'LIST'}]
+        })
     })
 })
 
@@ -74,4 +95,7 @@ export const {
     useGetCartQuery,
     useAddCartProductMutation,
     useDeleteCartProductMutation,
+    useGetOrdersQuery,
+    useAddOrderMutation,
+    useAddProductMutation,
 } = mainApi

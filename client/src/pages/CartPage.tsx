@@ -10,14 +10,13 @@ const CartPage = () => {
     const userId = useAppSelector(state => state.auth.id)
     const {data = {} as ICartResponse, isLoading} = useGetCartQuery(userId)
     if(isLoading) return <h1>Loading...</h1>
-    console.log(data)
     return (
         <>
             <Typography sx={{display: {xs: "none", md: "block"}}} variant='h4'>Cart</Typography>
             {
-                data && data.products.length != 0
+                data && data.products.length !== 0
                     ?
-                    <Cart products={data.products}/>
+                    <Cart products={data.products} cartId={data.id}/>
                     :
                     <EmptyCart/>
             }

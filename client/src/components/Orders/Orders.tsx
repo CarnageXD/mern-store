@@ -1,28 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import OrdersSummaryCard from '../Card/OrdersSummaryCard';
 import {Box, Typography} from "@mui/material";
-import {IOrders} from "../../types/Orders/orders";
 import Order from "./Order";
+import {useGetOrdersQuery} from "../../redux/features/api/mainApi";
+import {useAppSelector} from "../../hooks/redux-hooks";
 
 const Orders = () => {
-    const [loading, setLoading] = useState(false)
-    const [orders, setOrders] = useState<IOrders[]>([])
-    useEffect(() => {
-        async function getOrders () {
-            setLoading(true)
-            const response = await fetch('http://localhost:5000/api/orders/615458451e7fea07af1a277a')
-            const data = await response.json()
-            setOrders(data)
-        }
-        getOrders()
-    }, [])
+    const userId = useAppSelector(state => state.auth.id)
+    const {data = [], isLoading} = useGetOrdersQuery(userId)
+    if (isLoading) return <h1>Loading...</h1>
     return (
         <Box mt={4} display="flex" flexDirection="column" minHeight="50vh">
             <OrdersSummaryCard/>
             <Typography variant={"h6"}>Your orders: </Typography>
             <Box width="100%" display="flex" flexDirection="column">
-                {orders.map(order =>
-                    <Order {...order} />)}
+                {data.length === 0 ?
+                    <Typography sx={{mt: 2}} variant={"button"}>No orders yet</Typography>
+                    :
+                    data.map(order =>
+                            <Order key={order._id} {...order} />)
+                }
+
             </Box>
         </Box>
     )

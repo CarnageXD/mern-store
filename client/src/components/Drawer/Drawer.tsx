@@ -8,10 +8,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import {
     AccountCircleOutlined,
-    AssignmentOutlined, ExitToAppOutlined,
+    ExitToAppOutlined,
     HelpOutlineOutlined,
     LoginOutlined,
-    ShoppingBagOutlined, ShoppingCartOutlined
+    ShoppingCartOutlined
 } from "@mui/icons-material";
 import {Typography} from "@mui/material";
 import {NavLink} from 'react-router-dom';

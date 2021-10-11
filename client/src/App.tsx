@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import MainLayout from "./layouts/MainLayout";
 import {useRoutes} from "./routes/routes";
 import {useAppDispatch, useAppSelector} from "./hooks/redux-hooks";
@@ -14,7 +14,7 @@ const App = () => {
                 dispatch(setCredentials(authData))
             }
         }
-    }, [])
+    }, [dispatch])
     const isAuth = useAppSelector(state => state.auth.token)
 
     const routes = useRoutes(!!isAuth)
