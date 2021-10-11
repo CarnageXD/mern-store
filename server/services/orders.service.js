@@ -1,20 +1,18 @@
-const Orders = require('./../models/orders.model')
-const Cart = require('./../models/cart.model')
+const Orders = require("./../models/orders.model");
+const Cart = require("./../models/cart.model");
 
 class OrdersService {
-    async addOrder(userId) {
-        let cart = await Cart.findOne({userId})
-        await Orders.create({userId, products: cart.products})
-        await Cart.deleteOne({userId})
-    }
+  async addOrder(userId) {
+    let cart = await Cart.findOne({ userId });
+    await Orders.create({ userId, products: cart.products });
+    await Cart.deleteOne({ userId });
+  }
 
-    async getOrders(userId) {
-        return Orders.find({userId}).populate('products.product')
-    }
+  async getOrders(userId) {
+    return await Orders.find({ userId }).populate("products.product");
+  }
 
-    async updateOrder() {
-
-    }
+  async updateOrder() {}
 }
 
-module.exports = new OrdersService()
+module.exports = new OrdersService();

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState } from 'react';
 import OrderItem from "./OrderItem";
 import {Box, Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {IOrders} from "../../types/Orders/orders";
 import {Assignment, ExpandLess, ExpandMore} from "@mui/icons-material";
 
 const Order: React.FC<IOrders> = ({orderTime, products, _id}) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleClick = () => {
         setOpen(!open);
     };

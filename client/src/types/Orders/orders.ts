@@ -1,9 +1,10 @@
 import {IProduct} from "../Products/products";
 
-export interface OrdersResponse {
-    _id: string,
+export interface OrdersState {
     orders: IOrders[],
-    userId: string,
+    grandTotalPrice: number,
+    grandTotalQuantity: number,
+    avgSpent: number,
 }
 
 export interface IOrders {
@@ -17,4 +18,10 @@ export interface IOrderItem {
     product: IProduct,
     quantity: number,
     total: number,
+}
+
+export interface IOrderSummary {
+    price: number,
+    avg: number,
+    quantity: number
 }

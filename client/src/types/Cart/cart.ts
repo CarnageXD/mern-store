@@ -1,5 +1,9 @@
 import {IProduct} from "../Products/products";
 
+export interface CartState {
+    products: ICartProduct[]
+}
+
 export interface ICartProduct {
     id: string
     product: IProduct,

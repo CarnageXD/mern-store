@@ -51,6 +51,14 @@ export const mainApi = createApi({
             }),
             invalidatesTags: [{type: 'Cart', id: 'LIST'}]
         }),
+        adjustProductCartQuantity: build.mutation({
+            query: (payload) => ({
+                url: `cart/update/${payload.userId}`,
+                method: 'PUT',
+                body: {product: payload.product, quantity: payload.cartQuantity}
+            }),
+            invalidatesTags: [{type: 'Cart', id: 'LIST'}]
+        }),
         //PRODUCTS
         getProducts: build.query<IProduct[], void>({
             query: () => '/products'
@@ -98,4 +106,5 @@ export const {
     useGetOrdersQuery,
     useAddOrderMutation,
     useAddProductMutation,
+    useAdjustProductCartQuantityMutation,
 } = mainApi
