@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { Add, Delete, Remove } from "@mui/icons-material";
-import { ICartProduct } from "../../types/Cart/cart";
-import {
-  useAdjustProductCartQuantityMutation,
-  useDeleteCartProductMutation,
-} from "../../redux/features/api/mainApi";
-import { useAppSelector } from "../../hooks/redux-hooks";
+import React, {useState} from "react";
+import {Box, Button, CircularProgress, Typography} from "@mui/material";
+import {Add, Delete, Remove} from "@mui/icons-material";
+import {ICartProduct} from "../../types/Cart/cart";
+import {useAdjustProductCartQuantityMutation, useDeleteCartProductMutation,} from "../../redux/features/api/mainApi";
+import {useAppSelector} from "../../hooks/redux-hooks";
 
-const CartItem: React.FC<ICartProduct> = ({ product, quantity, total }) => {
+const CartItem: React.FC<ICartProduct> = ({product, quantity, total, size, _id}) => {
   const [cartQuantity, setCartQuantity] = useState(quantity);
   const userId = useAppSelector((state) => state.auth.id);
   const [adjustProductCart] = useAdjustProductCartQuantityMutation();
-  const [deleteCartProduct, { isLoading }] = useDeleteCartProductMutation();
+  const [deleteCartProduct, {isLoading}] = useDeleteCartProductMutation();
   // const [price, setPrice] = useState(5.45)
-
   const plus = () => {
     if (cartQuantity < 10) {
       setCartQuantity(cartQuantity + 1);
@@ -38,7 +34,7 @@ const CartItem: React.FC<ICartProduct> = ({ product, quantity, total }) => {
   };
 
   const handleDeleteProduct = () => {
-    deleteCartProduct({ id: product._id, userId });
+    deleteCartProduct({id: _id, userId});
   };
   if (isLoading) return <CircularProgress color="primary" />;
   return (
@@ -58,20 +54,23 @@ const CartItem: React.FC<ICartProduct> = ({ product, quantity, total }) => {
         />
         <Box ml={1}>
           <Typography
-            variant="h5"
-            sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
+              variant="h5"
+              sx={{fontSize: {xs: "0.9rem", md: "1rem"}}}
           >
             {product.title}
           </Typography>
           <Typography variant="body1">
             {product.price}$ x {cartQuantity}
           </Typography>
+          <Typography color={"primary.light"} variant="body2">
+            Size: {size}
+          </Typography>
           <Box display={"flex"} flexWrap={"nowrap"} pt={2}>
             <Button onClick={plus}>
-              <Add fontSize={"small"} />
+              <Add fontSize={"small"}/>
             </Button>
             <Button onClick={minus}>
-              <Remove />
+              <Remove/>
             </Button>
           </Box>
         </Box>

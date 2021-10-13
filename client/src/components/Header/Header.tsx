@@ -6,7 +6,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import {AccountCircleOutlined, ExitToAppOutlined, ShoppingCartOutlined,} from "@mui/icons-material";
+import {
+    AccountCircleOutlined,
+    AdminPanelSettingsOutlined,
+    ExitToAppOutlined,
+    ShoppingCartOutlined,
+} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import Drawer from "../Drawer/Drawer";
 import {NavLink} from "react-router-dom";
@@ -44,6 +49,11 @@ export default function Header() {
                     </Typography>
                     {isAuth ? (
                         <>
+                            <NavLink to="/admin">
+                                <IconButton color="inherit">
+                                    <AdminPanelSettingsOutlined/>
+                                </IconButton>
+                            </NavLink>
                             <NavLink to="/profile">
                                 <IconButton color="inherit">
                                     <AccountCircleOutlined/>

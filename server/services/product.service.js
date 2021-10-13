@@ -1,16 +1,26 @@
 const Product = require("./../models/product.model");
 
 class ProductService {
-  async create({ title, ...product }) {
-    const candidate = await Product.findOne({ title });
+  async create({title, ...product}) {
+    const candidate = await Product.findOne({title});
     if (candidate) {
       throw new Error("This product is already exists");
     }
-    return await Product.create({ title, ...product });
+    return await Product.create({title, ...product});
   }
-  async getAll() {
-    return Product.find();
+
+  async getItems(queryParams) {
+    const totalItems = await Product.count()
+
+    if (!queryParams) {
+      return {items: await Product.find(), totalItems}
+    }
+    return {
+      items: await Product.find().limit(+queryParams.limit).skip(+(queryParams.limit * (queryParams.page - 1))),
+      totalItems
+    }
   }
+
   async getOne(id) {
     const product = await Product.findById(id);
     if (!product) {
@@ -18,6 +28,7 @@ class ProductService {
     }
     return product;
   }
+
   async update(id, productBody) {
     const product = await Product.findById(id);
     if (!product) {

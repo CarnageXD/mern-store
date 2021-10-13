@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, ListItemIcon, ListItemText} from "@mui/material";
-import {IOrderItem } from "../../types/Orders/orders";
+import {IOrderItem} from "../../types/Orders/orders";
 
 
 const OrderItem: React.FC<IOrderItem> = ({product, quantity, total}) => {

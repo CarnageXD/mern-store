@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import {RegisterData, LoginData, AuthState} from "../../../types/Auth/auth";
-import {IProduct} from "../../../types/Products/products";
+import {AuthState, LoginData, RegisterData} from "../../../types/Auth/auth";
+import {IProduct, IProductsResponse} from "../../../types/Products/products";
 import {ICartResponse} from "../../../types/Cart/cart";
 import {IOrders} from "../../../types/Orders/orders";
 
@@ -30,8 +30,8 @@ export const mainApi = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.products.map(({ id }) => ({ type: 'Cart' as const, id })),
-                        { type: 'Cart', id: 'LIST' },
+                        ...result.products.map(({_id}) => ({type: 'Cart' as const, _id})),
+                        {type: 'Cart', id: 'LIST'},
                     ]
                     : [{ type: 'Cart', id: 'LIST' }],
         }),
@@ -39,7 +39,7 @@ export const mainApi = createApi({
             query: (payload) => ({
                 url: `cart/add/${payload.userId}`,
                 method: 'POST',
-                body: {product: payload.id}
+                body: {product: payload.id, size: payload.size}
             }),
             invalidatesTags: [{type: 'Cart', id: 'LIST'}]
         }),
@@ -60,14 +60,14 @@ export const mainApi = createApi({
             invalidatesTags: [{type: 'Cart', id: 'LIST'}]
         }),
         //PRODUCTS
-        getProducts: build.query<IProduct[], void>({
-            query: () => '/products'
+        getProducts: build.query<IProductsResponse, { limit: number, page: number }>({
+            query: (queryParams) => `/products?limit=${queryParams.limit}&page=${queryParams.page}`
         }),
         getProduct: build.query<IProduct, string | void>({
             query: (id) => `/products/${id}`
         }),
         addProduct: build.mutation({
-            query: (body:string) => ({
+            query: (body) => ({
                 url: 'products/create',
                 method: "POST",
                 body

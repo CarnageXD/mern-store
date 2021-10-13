@@ -5,7 +5,13 @@ export interface IProduct {
     description: string
     image: string
     price: number
-    sex: number
+    sex: number,
+    sizes: string
+}
+
+export interface IProductsResponse {
+    items: IProduct[],
+    totalItems: number,
 }
 
 export interface IDetailedProduct {

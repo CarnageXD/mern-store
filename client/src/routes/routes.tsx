@@ -1,9 +1,10 @@
-import { Redirect, Route, Switch } from "react-router-dom"
+import {Redirect, Route, Switch} from "react-router-dom"
 import ProfilePage from "../pages/ProfilePage";
 import ProductsPage from "../pages/ProductsPage";
 import DetailedProductPage from "../pages/DetailedProductPage";
 import CartPage from "../pages/CartPage";
 import AuthPage from "../pages/AuthPage";
+import AdminPage from "../pages/AdminPage";
 
 
 export const useRoutes = (isAuthenticated: boolean) => {
@@ -22,8 +23,11 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 <Route path='/cart' exact>
                     <CartPage/>
                 </Route>
-                <Redirect to='/' />
-            </Switch >
+                <Route path='/admin' exact>
+                    <AdminPage/>
+                </Route>
+                <Redirect to='/'/>
+            </Switch>
         )
     }
     return (

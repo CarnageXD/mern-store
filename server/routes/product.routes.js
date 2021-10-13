@@ -6,7 +6,7 @@ const multerInstance = require('./../multer/multer')
 const router = Router()
 
 router.post('/create', multerInstance.upload.single('image'), ProductController.create)
-router.get('/', ProductController.getAll)
+router.get('/', ProductController.getItems)
 router.get('/:id', ProductController.getOne)
 router.patch('/update/:id', ProductController.update)
 router.delete('/delete/:id', ProductController.delete)

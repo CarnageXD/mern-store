@@ -2,25 +2,27 @@ const Cart = require("./../models/cart.model");
 const Product = require("./../models/product.model");
 
 class CartService {
-  async addCartProduct(userId, { total = 1, quantity = 1, product }) {
-    let cart = await Cart.findOne({ userId });
-    let productData = await Product.findOne({ _id: product });
+  async addCartProduct(userId, {total = 1, quantity = 1, product, size}) {
+    let cart = await Cart.findOne({userId});
+    let productData = await Product.findOne({_id: product});
     let price = productData.price;
     total = price * quantity;
 
     if (!cart) {
       return await Cart.create({
         userId,
-        products: [{ product, quantity, total }],
+        products: [{product, quantity, total, size}],
       });
     } else {
       let itemIndex = cart.products.findIndex((p) => p.product == product);
       if (itemIndex === -1) {
-        cart.products.push({ product, quantity, total });
-      } else {
+        cart.products.push({product, quantity, total, size});
+      } else if (cart.products[itemIndex].size === size) {
         cart.products[itemIndex].quantity++;
         cart.products[itemIndex].total =
-          price * cart.products[itemIndex].quantity;
+            price * cart.products[itemIndex].quantity;
+      } else {
+        cart.products.push({product, quantity, total, size});
       }
       return await cart.save();
     }
@@ -36,7 +38,7 @@ class CartService {
       throw new Error("This cart does not exists");
     }
     await Cart.updateMany({
-      $pull: { products: { product: { _id: productCartId.product } } },
+      $pull: {products: {_id: productCartId.product}},
     });
   }
 

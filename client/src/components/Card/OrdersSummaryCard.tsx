@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Card, CardContent, Typography} from "@mui/material";
-import { IOrderSummary } from '../../types/Orders/orders';
+import {IOrderSummary} from '../../types/Orders/orders';
 
 const OrdersSummaryCard:React.FC<IOrderSummary> = ({avg, price, quantity}) => {
     return (
@@ -24,7 +24,7 @@ const OrdersSummaryCard:React.FC<IOrderSummary> = ({avg, price, quantity}) => {
                             </Box>
                             <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
                                 <Typography variant="body1">Average spent </Typography>
-                                <Typography variant="h5">{avg.toFixed(2)}$</Typography>
+                                <Typography variant="h5">{isNaN(avg) ? '0.00' : avg.toFixed(2)}$</Typography>
                             </Box>
                         </Box>
                     </CardContent>

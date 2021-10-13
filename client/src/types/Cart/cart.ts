@@ -5,10 +5,11 @@ export interface CartState {
 }
 
 export interface ICartProduct {
-    id: string
+    _id: string
     product: IProduct,
     quantity: number,
     total: number,
+    size: string,
 }
 
 export interface  ICartResponse {

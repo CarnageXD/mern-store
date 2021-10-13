@@ -11,16 +11,18 @@ class ProductController {
             const product = await ProductService.create(payload)
             res.status(201).json(product)
         } catch (e) {
-            res.status(500).json({ message: e.message })
+            res.status(500).json({message: e.message})
         }
     }
-    async getAll(req, res) {
+
+    async getItems(req, res) {
         try {
-            return res.json(await ProductService.getAll())
+            return res.json(await ProductService.getItems(req.query))
         } catch (e) {
-            res.status(500).json({ message: e.message })
+            res.status(500).json({message: e.message})
         }
     }
+
     async getOne(req, res) {
         try {
             return res.json(await ProductService.getOne(req.params.id))
