@@ -10,13 +10,26 @@ class ProductService {
   }
 
   async getItems(queryParams) {
-    const totalItems = await Product.count()
-
-    if (!queryParams) {
-      return {items: await Product.find(), totalItems}
+    const isEmpty = x => !Object.keys(x).length
+    if (isEmpty(queryParams)) {
+      return {items: await Product.find(), totalItems: 1}
     }
+    const page = queryParams.page || 1
+    const limit = queryParams.limit || 0
+    const totalItems = queryParams.page && queryParams.limit ? await Product.find().countDocuments() : 1
+    const order = queryParams.order || ''
+
+    const sortOrder =
+        order === 'lowest'
+            ? {price: 1}
+            : order === 'highest'
+                ? {price: -1}
+                : order === 'category'
+                    ? {category: -1}
+                    : {_id: -1}
+
     return {
-      items: await Product.find().limit(+queryParams.limit).skip(+(queryParams.limit * (queryParams.page - 1))),
+      items: await Product.find().limit(+limit).skip(+(limit * (page - 1))).sort(sortOrder),
       totalItems
     }
   }

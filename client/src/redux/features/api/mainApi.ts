@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 import {AuthState, LoginData, RegisterData} from "../../../types/Auth/auth";
-import {IProduct, IProductsResponse} from "../../../types/Products/products";
+import {IProduct, IProductsResponse, IQueryGetProduct} from "../../../types/Products/products";
 import {ICartResponse} from "../../../types/Cart/cart";
 import {IOrders} from "../../../types/Orders/orders";
 
@@ -60,8 +60,9 @@ export const mainApi = createApi({
             invalidatesTags: [{type: 'Cart', id: 'LIST'}]
         }),
         //PRODUCTS
-        getProducts: build.query<IProductsResponse, { limit: number, page: number }>({
-            query: (queryParams) => `/products?limit=${queryParams.limit}&page=${queryParams.page}`
+        getProducts: build.query<IProductsResponse, IQueryGetProduct>({
+            query: (queryParams) =>
+                `/products?limit=${queryParams.limit}&page=${queryParams.page}&order=${queryParams.order}`
         }),
         getProduct: build.query<IProduct, string | void>({
             query: (id) => `/products/${id}`

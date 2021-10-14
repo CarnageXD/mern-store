@@ -9,6 +9,12 @@ export interface IProduct {
     sizes: string
 }
 
+export interface IQueryGetProduct {
+    limit?: number,
+    page?: number,
+    order?: string
+}
+
 export interface IProductsResponse {
     items: IProduct[],
     totalItems: number,
