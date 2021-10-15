@@ -7,7 +7,7 @@ import {FilterAlt} from "@mui/icons-material";
 
 
 export default function Filter() {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = React.useState(false)
 
     const toggleDrawer = () => () => {
         setIsOpen(prev => !prev);
