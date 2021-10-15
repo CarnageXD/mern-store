@@ -5,6 +5,7 @@ import {useGetProductsQuery} from "../../redux/features/api/mainApi";
 import {IProductsResponse} from "../../types/Products/products";
 import Search from "../Search/Search";
 import Select from "../Select/Select";
+import Filter from "../Drawer/Filter";
 
 const ProductsList = () => {
     const [searchValue, setSearchValue] = useState('')
@@ -25,7 +26,10 @@ const ProductsList = () => {
             <Box mb={4} width="100%" flexDirection={{xs: "column", md: "row"}}
                  display="flex" justifyContent="space-between">
                 <Search value={searchValue} setValue={setSearchValue}/>
-                <Select value={sortValue} setValue={setSortValue}/>
+                <Box mt={2} display="flex" alignItems="center" justifyContent="space-between">
+                    <Select value={sortValue} setValue={setSortValue}/>
+                    <Filter/>
+                </Box>
             </Box>
 
             <Grid container spacing={4}>

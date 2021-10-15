@@ -1,16 +1,17 @@
 import React, {useState} from "react";
-import {Box, Button, CircularProgress, Typography} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import {Add, Delete, Remove} from "@mui/icons-material";
 import {ICartProduct} from "../../types/Cart/cart";
 import {useAdjustProductCartQuantityMutation, useDeleteCartProductMutation,} from "../../redux/features/api/mainApi";
-import {useAppSelector} from "../../hooks/redux-hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
+import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 
 const CartItem: React.FC<ICartProduct> = ({product, quantity, total, size, _id}) => {
   const [cartQuantity, setCartQuantity] = useState(quantity);
+  const dispatch = useAppDispatch()
   const userId = useAppSelector((state) => state.auth.id);
   const [adjustProductCart] = useAdjustProductCartQuantityMutation();
-  const [deleteCartProduct, {isLoading}] = useDeleteCartProductMutation();
-  // const [price, setPrice] = useState(5.45)
+  const [deleteCartProduct] = useDeleteCartProductMutation();
   const plus = () => {
     if (cartQuantity < 10) {
       setCartQuantity(cartQuantity + 1);
@@ -35,8 +36,8 @@ const CartItem: React.FC<ICartProduct> = ({product, quantity, total, size, _id})
 
   const handleDeleteProduct = () => {
     deleteCartProduct({id: _id, userId});
+    dispatch(setSuccessSnackbar('The product was successfully deleted'))
   };
-  if (isLoading) return <CircularProgress color="primary" />;
   return (
     <Box
       mb={2}

@@ -1,28 +1,26 @@
 import React from "react";
 import Cart from "../components/Cart/Cart";
 import EmptyCart from "../components/Cart/EmptyCart";
-import { CircularProgress, Typography } from "@mui/material";
-import { useAppSelector } from "../hooks/redux-hooks";
-import { useGetCartQuery } from "../redux/features/api/mainApi";
-import { ICartResponse } from "../types/Cart/cart";
+import {Typography} from "@mui/material";
+import {useAppSelector} from "../hooks/redux-hooks";
 
 const CartPage = () => {
-  const userId = useAppSelector((state) => state.auth.id);
-  const { data = {} as ICartResponse, isLoading } = useGetCartQuery(userId);
+    const userId = useAppSelector((state) => state.auth.id);
+    const products = useAppSelector((state) => state.cart.products)
+    const cartId = useAppSelector((state) => state.cart.cartId)
 
-  if (isLoading) return <CircularProgress color="primary" />;
-  return (
-    <>
-      <Typography sx={{ display: { xs: "none", md: "block" } }} variant="h4">
-        Cart
-      </Typography>
-      {data && data.products.length !== 0 ? (
-        <Cart products={data.products} cartId={data.id} />
-      ) : (
-        <EmptyCart />
-      )}
-    </>
-  );
+    return (
+        <>
+            <Typography sx={{display: {xs: "none", md: "block"}}} variant="h4">
+                Cart
+            </Typography>
+            {products && products.length !== 0 ? (
+                <Cart products={products} cartId={cartId}/>
+            ) : (
+                <EmptyCart/>
+            )}
+        </>
+    );
 };
 
 export default CartPage;

@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState} from 'react';
 import OrderItem from "./OrderItem";
 import {Box, Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {IOrders} from "../../types/Orders/orders";
@@ -12,6 +12,7 @@ const Order: React.FC<IOrders> = ({orderTime, products, _id}) => {
     const cutStr = (str: string) => {
         return str.substr(0, 10)
     }
+
     return (
         <List sx={{width: "100%", display: "flex", flexDirection: "column"}}>
             <ListItem button onClick={handleClick}>

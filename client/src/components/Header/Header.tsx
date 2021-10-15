@@ -12,7 +12,7 @@ import {
     ExitToAppOutlined,
     ShoppingCartOutlined,
 } from "@mui/icons-material";
-import {Divider} from "@mui/material";
+import {Badge, Divider} from "@mui/material";
 import Drawer from "../Drawer/Drawer";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
@@ -22,6 +22,8 @@ export default function Header() {
     const isAuth = !!useAppSelector((state) => state.auth.token);
     const dispatch = useAppDispatch();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const cartLength = useAppSelector(state => state.cart.products?.length)
+    const product = useAppSelector(state => state.cart.products)
     const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
 
     const handleLogout = () => {
@@ -61,7 +63,9 @@ export default function Header() {
                             </NavLink>
                             <NavLink to="/cart">
                                 <IconButton color="inherit">
-                                    <ShoppingCartOutlined/>
+                                    <Badge badgeContent={cartLength} color="primary">
+                                        <ShoppingCartOutlined/>
+                                    </Badge>
                                 </IconButton>
                             </NavLink>
                             <NavLink to="/">

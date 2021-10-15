@@ -14,11 +14,11 @@ import {IToggleAuth, LoginData} from "../../types/Auth/auth";
 import {useUserLoginMutation} from "../../redux/features/api/mainApi";
 import {setCredentials} from "../../redux/features/authSlice";
 import {useAppDispatch} from "../../hooks/redux-hooks";
-import {setSnackbar} from "../../redux/features/snackbarSlice";
+import {setErrorSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 import {CircularProgress} from "@mui/material";
 
 const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
-  const [loginUser, {isLoading}] = useUserLoginMutation();
+  const [loginUser, {isLoading, isError}] = useUserLoginMutation();
   const [userData, setUserData] = useState<LoginData>({} as LoginData);
   const dispatch = useAppDispatch();
 
@@ -34,14 +34,10 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
     }).unwrap();
     dispatch(setCredentials(data));
     localStorage.setItem("authData", JSON.stringify(data));
-    dispatch(
-        setSnackbar({
-          snackbarOpen: true,
-          snackbarType: "success",
-          snackbarMessage: "Welcome back",
-        })
-    );
+    dispatch(setSuccessSnackbar('Welcome back!'));
   };
+
+  if (isError) dispatch(setErrorSnackbar("Something went wrong, try again..."))
   if (isLoading) return <CircularProgress color="primary"/>;
   return (
       <Container component="main" maxWidth="xs">

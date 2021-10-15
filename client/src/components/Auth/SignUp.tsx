@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useState} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,60 +10,52 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { IToggleAuth, RegisterData } from "../../types/Auth/auth";
-import { useUserRegisterMutation } from "../../redux/features/api/mainApi";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSnackbar } from "../../redux/features/snackbarSlice";
+import {IToggleAuth, RegisterData} from "../../types/Auth/auth";
+import {useUserRegisterMutation} from "../../redux/features/api/mainApi";
+import {useDispatch} from "react-redux";
+import {setErrorSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 import {CircularProgress} from "@mui/material";
 
-const SignUp: React.FC<IToggleAuth> = ({ toggle }) => {
+const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
   const [userData, setUserData] = useState<RegisterData>({} as RegisterData);
   const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setUserData({...userData, [e.target.name]: e.target.value});
   };
 
-  const [registerUser, { isLoading, isError }] = useUserRegisterMutation();
+  const [registerUser, {isLoading, isError}] = useUserRegisterMutation();
 
   const handleRegister = () => {
     registerUser({
       ...userData,
     }).unwrap();
-    dispatch(
-      setSnackbar({
-        snackbarOpen: true,
-        snackbarType: isError ? "error" : "success",
-        snackbarMessage: isError
-          ? "Something went wrong"
-          : "User has been created successfully",
-      })
-    );
+    dispatch(setSuccessSnackbar('User has been successfully created'))
   };
-
-  if (isLoading) return <CircularProgress color="primary" />;
+  
+  if (isError) dispatch(setErrorSnackbar("Something went wrong, try again"))
+  if (isLoading) return <CircularProgress color="primary"/>;
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "gray" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Box component="form" noValidate sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
+      <Container component="main" maxWidth="xs">
+        <CssBaseline/>
+        <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+        >
+          <Avatar sx={{m: 1, bgcolor: "gray"}}>
+            <LockOutlinedIcon/>
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate sx={{mt: 3}}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
                 onChange={handleChange}
                 autoComplete="name"
                 name="name"

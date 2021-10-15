@@ -1,7 +1,8 @@
 import {IProduct} from "../Products/products";
 
 export interface CartState {
-    products: ICartProduct[]
+    products: ICartProduct[],
+    cartId: string | null,
 }
 
 export interface ICartProduct {
@@ -12,8 +13,14 @@ export interface ICartProduct {
     size: string,
 }
 
-export interface  ICartResponse {
+export interface ICartResponse {
     userId: string,
     id: string,
     products: ICartProduct[]
+}
+
+export interface ICartSummary {
+    totalQuantity: number,
+    totalPrice: number,
+    handleAddProduct: () => void
 }

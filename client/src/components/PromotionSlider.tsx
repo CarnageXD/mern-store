@@ -22,7 +22,7 @@ const PromotionSlider = () => {
            {items.map(item => (
                    <Box key={item.image}
                        sx={{
-                           height: {xs: "35vh", sm: "70vh", md: "86vh"},
+                           height: {xs: "35vh", sm: "70vh", md: "85vh"},
                            backgroundImage: `url(${item.image})`,
                            backgroundSize: "cover",
                            backgroundPosition: "center",

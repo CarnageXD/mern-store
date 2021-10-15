@@ -8,7 +8,7 @@ type CustomSelectProps = {
 
 const CustomSelect: React.FC<CustomSelectProps> = ({value, setValue}) => {
     return (
-        <Box mt={2}>
+        <Box>
             <FormControl fullWidth>
                 <InputLabel id="select-id">Sort by</InputLabel>
                 <Select variant="standard"

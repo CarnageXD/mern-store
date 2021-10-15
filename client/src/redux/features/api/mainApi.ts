@@ -6,7 +6,7 @@ import {IOrders} from "../../../types/Orders/orders";
 
 export const mainApi = createApi({
     reducerPath: 'mainApi',
-    tagTypes: ['Cart', 'Orders'],
+    tagTypes: ['Cart', 'Orders', 'Products'],
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5000/api/'}),
     endpoints: (build) => ({
         //AUTH
@@ -62,8 +62,16 @@ export const mainApi = createApi({
         //PRODUCTS
         getProducts: build.query<IProductsResponse, IQueryGetProduct>({
             query: (queryParams) =>
-                `/products?limit=${queryParams.limit}&page=${queryParams.page}&order=${queryParams.order}`
+                `/products?limit=${queryParams.limit}&page=${queryParams.page}&order=${queryParams.order}`,
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.items.map(({_id}) => ({type: 'Products' as const, _id})),
+                        {type: 'Products', id: 'LIST'},
+                    ]
+                    : [{type: 'Products', id: 'LIST'}],
         }),
+
         getProduct: build.query<IProduct, string | void>({
             query: (id) => `/products/${id}`
         }),
@@ -72,7 +80,8 @@ export const mainApi = createApi({
                 url: 'products/create',
                 method: "POST",
                 body
-            })
+            }),
+            invalidatesTags: [{type: 'Products', id: 'LIST'}]
         }),
         //ORDERS
         getOrders: build.query<IOrders[], string | null>({
@@ -91,7 +100,7 @@ export const mainApi = createApi({
                 method: 'POST',
                 body: {cardId: payload.cartId}
             }),
-            invalidatesTags: [{type: 'Cart', id: 'LIST'}]
+            invalidatesTags: [{type: 'Orders', id: 'LIST'}, {type: 'Cart', id: 'LIST'}]
         })
     })
 })

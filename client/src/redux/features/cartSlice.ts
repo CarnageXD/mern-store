@@ -1,16 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import { CartState, ICartProduct } from '../../types/Cart/cart';
+import {CartState} from '../../types/Cart/cart';
 
 const initialState: CartState = {
-    products: []
+    products: [],
+    cartId: null,
 }
 
 export const authSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        setCart: (state, action: PayloadAction<ICartProduct[]>) => {
-            state.products = state.products.concat(action.payload)
+        setCart: (state, action: PayloadAction<CartState>) => {
+            state.products = action.payload.products
+            state.cartId = action.payload.cartId
         }
     }
 })

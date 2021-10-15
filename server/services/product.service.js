@@ -14,10 +14,22 @@ class ProductService {
     if (isEmpty(queryParams)) {
       return {items: await Product.find(), totalItems: 1}
     }
+
+    //pagination
     const page = queryParams.page || 1
     const limit = queryParams.limit || 0
     const totalItems = queryParams.page && queryParams.limit ? await Product.find().countDocuments() : 1
+
+    //order
     const order = queryParams.order || ''
+
+    //filter
+    const name = queryParams.name || ''
+    const category = queryParams.category || ''
+    const min = queryParams.min && Number(queryParams.min) !== 0 ? Number(queryParams.min) : 0
+    const max = queryParams.max && Number(queryParams.max) !== 0 ? Number(queryParams.max) : 0
+
+    const categoryFilter = category ? {category} : {}
 
     const sortOrder =
         order === 'lowest'
@@ -29,7 +41,7 @@ class ProductService {
                     : {_id: -1}
 
     return {
-      items: await Product.find().limit(+limit).skip(+(limit * (page - 1))).sort(sortOrder),
+      items: await Product.find({...categoryFilter}).limit(+limit).skip(+(limit * (page - 1))).sort(sortOrder),
       totalItems
     }
   }

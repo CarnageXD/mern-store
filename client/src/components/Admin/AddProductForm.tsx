@@ -3,7 +3,7 @@ import {Box, Button, CircularProgress, MenuItem, TextField, Typography} from "@m
 import {IAdminAddProduct} from "../../types/Admin/admin";
 import {useAddProductMutation} from "../../redux/features/api/mainApi";
 import {useAppDispatch} from "../../hooks/redux-hooks";
-import {setSnackbar} from "../../redux/features/snackbarSlice";
+import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 
 const AddProductForm = () => {
     const [product, setProduct] = useState<IAdminAddProduct>({
@@ -13,7 +13,7 @@ const AddProductForm = () => {
         price: '',
         image: '',
         sex: '',
-        sizes: '',
+        sizes: '37, 38, 39, 40, 41, 42, 43, 44',
     })
 
     const dispatch = useAppDispatch()
@@ -31,12 +31,7 @@ const AddProductForm = () => {
         e.preventDefault()
         const formData = createFormData()
         addProduct(formData)
-        dispatch(setSnackbar({
-                snackbarOpen: true,
-                snackbarType: "success",
-                snackbarMessage: "Product has been created successfully",
-            })
-        )
+        dispatch(setSuccessSnackbar("Products was successfully created"))
         setProduct({
             title: '',
             description: '',
@@ -117,7 +112,7 @@ const AddProductForm = () => {
                     <MenuItem value={"male"}>Male</MenuItem>
                     <MenuItem value={"female"}>Female</MenuItem>
                 </TextField>
-                <TextField required onChange={handleChange} variant={"standard"} label="Sizez"
+                <TextField required onChange={handleChange} variant={"standard"} label="Sizes"
                            id="sizes"
                            name="sizes"
                            placeholder={"Format: '37, 38, 39...' "}
