@@ -4,7 +4,7 @@ const { validationRules, validate } = require('../utils/validator.js')
 
 const router = Router()
 
-router.post('/register', validationRules.register, validate,  AuthController.register)
+router.post('/register', validationRules.register, validate, AuthController.register)
 router.post('/login', validationRules.login, validate, AuthController.login)
 
 module.exports = router

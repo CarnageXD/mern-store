@@ -7,7 +7,13 @@ import {IOrders} from "../../../types/Orders/orders";
 export const mainApi = createApi({
     reducerPath: 'mainApi',
     tagTypes: ['Cart', 'Orders', 'Products'],
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5000/api/'}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:5000/api/',
+        prepareHeaders(headers) {
+            headers.set('Authorization', `Bearer ${localStorage.getItem('authData')}`)
+            return headers
+        }
+    }),
     endpoints: (build) => ({
         //AUTH
         userRegister: build.mutation<void, RegisterData>({

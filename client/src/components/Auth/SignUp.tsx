@@ -31,6 +31,7 @@ const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
     registerUser({
       ...userData,
     }).unwrap();
+    toggle()
     dispatch(setSuccessSnackbar('User has been successfully created'))
   };
   

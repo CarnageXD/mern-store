@@ -5,7 +5,6 @@ import {Typography} from "@mui/material";
 import {useAppSelector} from "../hooks/redux-hooks";
 
 const CartPage = () => {
-    const userId = useAppSelector((state) => state.auth.id);
     const products = useAppSelector((state) => state.cart.products)
     const cartId = useAppSelector((state) => state.cart.cartId)
 

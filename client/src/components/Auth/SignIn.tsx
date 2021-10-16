@@ -33,7 +33,7 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
       password: userData.password,
     }).unwrap();
     dispatch(setCredentials(data));
-    localStorage.setItem("authData", JSON.stringify(data));
+    localStorage.setItem("authData", JSON.stringify(data.token));
     dispatch(setSuccessSnackbar('Welcome back!'));
   };
 

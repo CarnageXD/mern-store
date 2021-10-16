@@ -19,7 +19,7 @@ const Cart: React.FC<{ products: ICartProduct[]; cartId: string | null }> = ({
     const summaryPrice = getTotal(products, 'total')
     const summaryQuantity = getTotal(products, 'quantity')
 
-    const [addOrder, {isError}] = useAddOrderMutation();
+    const [addOrder] = useAddOrderMutation();
     const handleAddingOrder = async () => {
         dispatch(setCart({products: [], cartId: null}))
         addOrder({cartId, userId}).unwrap()

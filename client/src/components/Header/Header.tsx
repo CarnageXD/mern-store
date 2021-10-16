@@ -23,7 +23,6 @@ export default function Header() {
     const dispatch = useAppDispatch();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const cartLength = useAppSelector(state => state.cart.products?.length)
-    const product = useAppSelector(state => state.cart.products)
     const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
 
     const handleLogout = () => {

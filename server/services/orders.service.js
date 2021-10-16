@@ -20,7 +20,7 @@ class OrdersService {
             product_data: {
               name: storeItem.product.title,
             },
-            unit_amount: storeItem.total * 100,
+            unit_amount: storeItem.product.price * 100,
           },
           quantity: storeItem.quantity,
         }
