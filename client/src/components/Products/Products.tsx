@@ -13,8 +13,6 @@ const Products = () => {
     const [sortValue, setSortValue] = useState('Newest')
     const [filters, setFilters] = useState({} as IProductFilters)
 
-    console.log(filters.category)
-
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };

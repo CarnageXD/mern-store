@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 import {ICartProduct} from "../../types/Cart/cart";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
 import {useAddOrderMutation} from "../../redux/features/api/mainApi";
-import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
+import {setInfoSnackbar} from "../../redux/features/snackbarSlice";
 import {getTotal} from "../../utils/getTotal";
 import CartSummaryCard from "../Card/CartSummaryCard";
 import {setCart} from "../../redux/features/cartSlice";
@@ -20,10 +20,11 @@ const Cart: React.FC<{ products: ICartProduct[]; cartId: string | null }> = ({
     const summaryQuantity = getTotal(products, 'quantity')
 
     const [addOrder, {isError}] = useAddOrderMutation();
-    const handleAddingOrder = () => {
+    const handleAddingOrder = async () => {
         dispatch(setCart({products: [], cartId: null}))
-        addOrder({cartId, userId});
-        dispatch(setSuccessSnackbar("Ordered successfully"))
+        addOrder({cartId, userId}).unwrap()
+            .then(payload => window.location = payload);
+        dispatch(setInfoSnackbar("Payment is processing"))
     };
 
     return (
