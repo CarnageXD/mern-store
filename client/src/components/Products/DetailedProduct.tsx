@@ -4,6 +4,7 @@ import {Box, Button, CircularProgress, MenuItem, TextField, Typography} from "@m
 import {useAddCartProductMutation, useGetProductQuery,} from "../../redux/features/api/mainApi";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
 import {setInfoSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
+import {NavLink} from "react-router-dom";
 
 const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
     const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
     const {data: product = {} as IProduct, isLoading} = useGetProductQuery(id);
     const [size, setSize] = useState('')
     const disableButtonCondition = cartProducts.findIndex(p => p.product._id === id && size === p.size) === -1 ? false : true
+    const isAuth = !!useAppSelector((state) => state.auth.token)
     const userId = useAppSelector((state) => state.auth.id);
     const [addProduct] = useAddCartProductMutation();
 
@@ -61,10 +63,19 @@ const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
                 </Box>
                 <Box sx={{mt: 4}} display={"flex"} justifyContent={"space-between"}>
                     <Typography variant={"h4"}>{product.price}$</Typography>
-
-                    <Button onClick={handleAddingProduct} disabled={disableButtonCondition} variant={"contained"}>
-                        Add to cart
-                    </Button>
+                    {
+                        isAuth ?
+                            <Button onClick={handleAddingProduct} disabled={disableButtonCondition}
+                                    variant={"contained"}>
+                                Add to cart
+                            </Button> :
+                            <NavLink to="/auth">
+                                <Button onClick={() => dispatch(setInfoSnackbar("Please, login to purchase product"))}
+                                        variant={"contained"}>
+                                    Add to cart
+                                </Button>
+                            </NavLink>
+                    }
                 </Box>
             </Box>
         </Box>

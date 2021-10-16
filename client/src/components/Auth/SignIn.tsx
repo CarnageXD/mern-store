@@ -28,16 +28,19 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
   };
 
   const handleLogin = async () => {
-    const data = await loginUser({
+    await loginUser({
       email: userData.email,
       password: userData.password,
-    }).unwrap();
-    dispatch(setCredentials(data));
-    localStorage.setItem("authData", JSON.stringify(data.token));
-    dispatch(setSuccessSnackbar('Welcome back!'));
+    }).unwrap().then((data) => {
+      dispatch(setCredentials(data));
+      localStorage.setItem("authData", JSON.stringify(data));
+      dispatch(setSuccessSnackbar('Welcome back!'));
+    }).catch(e => {
+      dispatch(setErrorSnackbar(e.message))
+    })
+
   };
 
-  if (isError) dispatch(setErrorSnackbar("Something went wrong, try again..."))
   if (isLoading) return <CircularProgress color="primary"/>;
   return (
       <Container component="main" maxWidth="xs">
@@ -55,7 +58,8 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate sx={{mt: 1}}>
+          <Box component="form" onSubmit={handleLogin}
+               sx={{mt: 1}}>
             <TextField
                 onChange={handleChange}
                 margin="normal"
@@ -79,7 +83,7 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
                 autoComplete="current-password"
             />
             <Button
-                onClick={handleLogin}
+                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{mt: 3, mb: 2}}

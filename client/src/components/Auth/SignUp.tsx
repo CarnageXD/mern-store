@@ -29,13 +29,13 @@ const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
 
   const handleRegister = () => {
     registerUser({
-      ...userData,
-    }).unwrap();
-    toggle()
-    dispatch(setSuccessSnackbar('User has been successfully created'))
+      ...userData, role: "USER"
+    }).unwrap().then(() => {
+      toggle()
+      dispatch(setSuccessSnackbar('User has been successfully created'))
+    }).catch(e => dispatch(setErrorSnackbar("Something went wrong, try again")))
   };
   
-  if (isError) dispatch(setErrorSnackbar("Something went wrong, try again"))
   if (isLoading) return <CircularProgress color="primary"/>;
   return (
       <Container component="main" maxWidth="xs">
@@ -53,19 +53,19 @@ const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate sx={{mt: 3}}>
+          <Box component="form" onSubmit={handleRegister} sx={{mt: 3}}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                onChange={handleChange}
-                autoComplete="name"
-                name="name"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                autoFocus
-              />
+                    onChange={handleChange}
+                    autoComplete="name"
+                    name="name"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Name"
+                    autoFocus
+                />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -80,33 +80,33 @@ const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                onChange={handleChange}
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
               />
             </Grid>
-          </Grid>
-          <Button
-            onClick={handleRegister}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link sx={{ cursor: "pointer" }} onClick={toggle} variant="body2">
-                Already have an account? Sign in
-              </Link>
             </Grid>
-          </Grid>
-        </Box>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link sx={{cursor: "pointer"}} onClick={toggle} variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
       </Box>
     </Container>
   );

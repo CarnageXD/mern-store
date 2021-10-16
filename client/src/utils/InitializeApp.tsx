@@ -12,12 +12,12 @@ const InitializeApp = () => {
         const data = localStorage.getItem("authData");
         if (data) {
             const authData = JSON.parse(data);
-            if (authData) {
+            if (authData && authData.token) {
                 dispatch(setCredentials(authData));
             }
         }
     }, [dispatch]);
-    const isAuth = !!useAppSelector((state) => state.auth.token);
+    const isAuth = useAppSelector((state) => state.auth.token);
     const userId = useAppSelector((state) => state.auth.id);
     const {data, isLoading} = useGetCartQuery(userId);
     useEffect(() => {
@@ -26,7 +26,7 @@ const InitializeApp = () => {
         }
     }, [data, dispatch])
 
-    const routes = useRoutes(isAuth);
+    const routes = useRoutes(!!isAuth);
 
     if (isLoading) return <CircularProgress color="primary"/>
     return (

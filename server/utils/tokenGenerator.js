@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken')
 
-function tokenGenerator (id, roles, name) {
+function tokenGenerator(id, role, name) {
     const payload = {
         id,
-        roles,
+        role,
         name,
     }
-    return jwt.sign(payload, process.env.SECRET, {expiresIn: '1h'})
+    return jwt.sign(payload, process.env.SECRET, {expiresIn: '1m'})
 }
 
 module.exports = tokenGenerator
