@@ -24,12 +24,11 @@ class ProductService {
     const order = queryParams.order || ''
 
     //filter
-    const name = queryParams.name || ''
     const category = queryParams.category || ''
     const min = queryParams.min && Number(queryParams.min) !== 0 ? Number(queryParams.min) : 0
     const max = queryParams.max && Number(queryParams.max) !== 0 ? Number(queryParams.max) : 0
-
-    const categoryFilter = category ? {category} : {}
+    const categoryFilter = category && category != 'undefined' ? {category} : {}
+    const priceFilter = min && max ? {price: {$gte: min, $lte: max}} : {}
 
     const sortOrder =
         order === 'lowest'
@@ -41,7 +40,7 @@ class ProductService {
                     : {_id: -1}
 
     return {
-      items: await Product.find({...categoryFilter}).limit(+limit).skip(+(limit * (page - 1))).sort(sortOrder),
+      items: await Product.find({...categoryFilter, ...priceFilter}).limit(+limit).skip(+(limit * (page - 1))).sort(sortOrder),
       totalItems
     }
   }

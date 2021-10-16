@@ -2,23 +2,27 @@ import React, {useState} from "react";
 import ProductItem from "./ProductItem";
 import {Box, CircularProgress, Grid, Pagination} from "@mui/material";
 import {useGetProductsQuery} from "../../redux/features/api/mainApi";
-import {IProductsResponse} from "../../types/Products/products";
+import {IProductFilters, IProductsResponse} from "../../types/Products/products";
 import Search from "../Search/Search";
-import Select from "../Select/Select";
+import SortSelect from "../Select/SortSelect";
 import Filter from "../Drawer/Filter";
 
-const ProductsList = () => {
+const Products = () => {
+    const [page, setPage] = useState(1)
     const [searchValue, setSearchValue] = useState('')
     const [sortValue, setSortValue] = useState('Newest')
-    const [page, setPage] = useState(1)
-    const portionSize = 6
-    const {data = {} as IProductsResponse, isLoading} = useGetProductsQuery(
-        {limit: portionSize, page: page, order: sortValue}
-    );
+    const [filters, setFilters] = useState({} as IProductFilters)
+
+    console.log(filters.category)
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
+
+    const portionSize = 6
+
+    const {data = {} as IProductsResponse, isLoading} = useGetProductsQuery(
+        {limit: portionSize, page: page, order: sortValue, filters});
 
     if (isLoading) return <CircularProgress color="primary"/>;
     return (
@@ -27,8 +31,8 @@ const ProductsList = () => {
                  display="flex" justifyContent="space-between">
                 <Search value={searchValue} setValue={setSearchValue}/>
                 <Box mt={2} display="flex" alignItems="center" justifyContent="space-between">
-                    <Select value={sortValue} setValue={setSortValue}/>
-                    <Filter/>
+                    <SortSelect setValue={setSortValue}/>
+                    <Filter setFilters={setFilters}/>
                 </Box>
             </Box>
 
@@ -49,4 +53,4 @@ const ProductsList = () => {
     );
 };
 
-export default ProductsList;
+export default Products;

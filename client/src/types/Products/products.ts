@@ -12,7 +12,14 @@ export interface IProduct {
 export interface IQueryGetProduct {
     limit?: number,
     page?: number,
-    order?: string
+    order?: string,
+    filters?: IProductFilters
+}
+
+export interface IProductFilters {
+    min?: number,
+    max?: number,
+    category?: string
 }
 
 export interface IProductsResponse {

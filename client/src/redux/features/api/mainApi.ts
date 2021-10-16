@@ -62,7 +62,7 @@ export const mainApi = createApi({
         //PRODUCTS
         getProducts: build.query<IProductsResponse, IQueryGetProduct>({
             query: (queryParams) =>
-                `/products?limit=${queryParams.limit}&page=${queryParams.page}&order=${queryParams.order}`,
+                `/products?limit=${queryParams.limit}&page=${queryParams.page}&order=${queryParams.order}&min=${queryParams.filters?.min}&max=${queryParams.filters?.max}&category=${queryParams.filters?.category}`,
             providesTags: (result) =>
                 result
                     ? [
