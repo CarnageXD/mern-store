@@ -26,7 +26,7 @@ type TemporaryDrawerType = {
 const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) => {
     const isAuth = !!(useAppSelector(state => state.auth.token));
     const dispatch = useAppDispatch()
-        const handleLogout = () => {
+    const handleLogout = () => {
         localStorage.removeItem('authData')
         dispatch(setCredentials({
             name: null,
@@ -73,16 +73,6 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemIcon>
                                     <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
                                         Bag
-                                    </ListItemText>
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to="/support" onClick={toggleDrawer}>
-                                <ListItem button style={{padding: '1rem .2rem'}}>
-                                    <ListItemIcon>
-                                        <HelpOutlineOutlined/>
-                                    </ListItemIcon>
-                                    <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
-                                        Support
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>

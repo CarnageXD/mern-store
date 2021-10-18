@@ -3,7 +3,7 @@ import {Box, Button, CircularProgress, MenuItem, TextField, Typography} from "@m
 import {IAdminAddProduct} from "../../types/Admin/admin";
 import {useAddProductMutation} from "../../redux/features/api/mainApi";
 import {useAppDispatch} from "../../hooks/redux-hooks";
-import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
+import {setErrorSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 
 const AddProductForm = () => {
     const [product, setProduct] = useState<IAdminAddProduct>({
@@ -30,18 +30,20 @@ const AddProductForm = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         const formData = createFormData()
-        addProduct(formData)
-        dispatch(setSuccessSnackbar("Products was successfully created"))
-        setProduct({
-            title: '',
-            description: '',
-            category: '',
-            price: '',
-            image: '',
-            sex: '',
-            sizes: '',
-        })
-
+        addProduct(formData).unwrap()
+            .then(() => {
+                dispatch(setSuccessSnackbar("Products was successfully created"))
+                setProduct({
+                    title: '',
+                    description: '',
+                    category: '',
+                    price: '',
+                    image: '',
+                    sex: '',
+                    sizes: '',
+                })
+            })
+            .catch(e => dispatch(setErrorSnackbar(e.data.message)))
     }
 
     const createFormData = () => {

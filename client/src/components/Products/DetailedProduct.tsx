@@ -3,7 +3,7 @@ import {IDetailedProduct, IProduct} from "../../types/Products/products";
 import {Box, Button, CircularProgress, MenuItem, TextField, Typography} from "@mui/material";
 import {useAddCartProductMutation, useGetProductQuery,} from "../../redux/features/api/mainApi";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
-import {setInfoSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
+import {setErrorSnackbar, setInfoSnackbar, setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 import {NavLink} from "react-router-dom";
 
 const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
@@ -18,8 +18,13 @@ const DetailedProduct: React.FC<IDetailedProduct> = ({id}) => {
 
     const handleAddingProduct = () => {
         if (size !== '') {
-            addProduct({id, userId, size});
-            dispatch(setSuccessSnackbar("Products was successfully added to cart"));
+            addProduct({
+                id,
+                userId,
+                size
+            }).unwrap().then(() => dispatch(setSuccessSnackbar("Products was successfully added to cart")))
+                .catch(e => dispatch(setErrorSnackbar(e.data.message))
+                )
         } else dispatch(setInfoSnackbar('Please, choose one of the sizes'));
     };
 
