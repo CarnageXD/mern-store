@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import ProductItem from "./ProductItem";
-import {Box, CircularProgress, Grid, Pagination} from "@mui/material";
+import {Box, CircularProgress, Grid, Pagination, Typography} from "@mui/material";
 import {useGetProductsQuery} from "../../redux/features/api/mainApi";
 import {IProductFilters, IProductsResponse} from "../../types/Products/products";
 import Search from "../Search/Search";
@@ -36,17 +36,25 @@ const Products = () => {
 
             <Grid container spacing={4}>
                 {
-                    data.items.filter(product => product.title.toLowerCase().includes(searchValue.toLowerCase()))
-                        .map((product) => (
-                            <ProductItem key={product._id} {...product} />
-                        ))
+                    data.items.length > 0 ?
+                        data.items.filter(product => product.title.toLowerCase().includes(searchValue.toLowerCase()))
+                            .map((product) => (
+                                <ProductItem key={product._id} {...product} />
+                            ))
+                        :
+                        <Typography gutterBottom variant="h5">No products</Typography>
                 }
             </Grid>
 
+            {
+                data.items.length > 0 ?
+                    <Pagination sx={{mb: 4, mt: 4}} page={page} onChange={handlePageChange} size={"large"}
+                                count={Math.ceil(data.totalItems / portionSize)} showFirstButton
+                                showLastButton/>
+                    :
+                    null
+            }
 
-            <Pagination sx={{mb: 4, mt: 4}} page={page} onChange={handlePageChange} size={"large"}
-                        count={Math.ceil(data.totalItems / portionSize)} showFirstButton
-                        showLastButton/>
         </Box>
     );
 };

@@ -15,7 +15,6 @@ export const FileUpload: React.FC<IUploadFile> = ({setFile, accept, children}) =
 
     return (
         <div onClick={() => ref.current.click()}>
-            
             {children}
         </div>
     );
