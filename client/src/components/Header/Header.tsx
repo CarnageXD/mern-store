@@ -17,6 +17,7 @@ import Drawer from "../Drawer/Drawer";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
 import {setCredentials} from "../../redux/features/authSlice";
+import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
 
 export default function Header() {
     const isAuth = !!useAppSelector((state) => state.auth.token);
@@ -35,6 +36,7 @@ export default function Header() {
                 role: null,
             })
         );
+        dispatch(setSuccessSnackbar("Success logout"))
     };
 
     return (
