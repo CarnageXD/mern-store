@@ -5,9 +5,11 @@ module.exports = function (req, res, next) {
 
     try {
         const token = req.headers.authorization.split(' ')[1] //BEARER TOKEN
-        if (!token) return res.status(403).json({ message: 'No authorization' })
+        if (!token) return res.status(403).json({message: 'No authorization'})
         const decodedData = jwt.decode(token, process.env.SECRET)
-        req.user = decodedData
+        if (decodedData) {
+            req.user = decodedData
+        } else return res.status(403).json({message: 'Session has been expired, logout and login again'})
         next()
 
     } catch (e) {

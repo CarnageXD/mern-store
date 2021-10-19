@@ -25,6 +25,7 @@ const SignIn: React.FC<IToggleAuth> = ({toggle}) => {
 
     const handleLogin = async (data: LoginData) => {
         await loginUser({...data}).unwrap().then((payload) => {
+            console.log(payload)
             dispatch(setCredentials(payload));
             localStorage.setItem("authData", JSON.stringify(payload));
             dispatch(setSuccessSnackbar('Welcome back!'));

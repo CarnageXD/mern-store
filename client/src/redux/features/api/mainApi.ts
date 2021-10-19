@@ -3,14 +3,16 @@ import {AuthState, LoginData, RegisterData} from "../../../types/Auth/auth";
 import {IProduct, IProductsResponse, IQueryGetProduct} from "../../../types/Products/products";
 import {ICartResponse} from "../../../types/Cart/cart";
 import {IOrders} from "../../../types/Orders/orders";
+import {RootState} from "../../store";
 
 export const mainApi = createApi({
     reducerPath: 'mainApi',
     tagTypes: ['Cart', 'Orders', 'Products'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/',
-        prepareHeaders(headers) {
-            headers.set('Authorization', `Bearer ${localStorage.getItem('authData')}`)
+        prepareHeaders(headers, {getState}) {
+            const token = (getState() as RootState).auth.token
+            headers.set('Authorization', `Bearer ${token}`)
             return headers
         }
     }),
@@ -32,18 +34,18 @@ export const mainApi = createApi({
         }),
         //CART
         getCart: build.query<ICartResponse, string | null>({
-            query: (id) => `cart/${id}`,
+            query: () => `cart`,
             providesTags: (result) =>
                 result
                     ? [
                         ...result.products.map(({_id}) => ({type: 'Cart' as const, _id})),
                         {type: 'Cart', id: 'LIST'},
                     ]
-                    : [{ type: 'Cart', id: 'LIST' }],
+                    : [{type: 'Cart', id: 'LIST'}],
         }),
         addCartProduct: build.mutation({
             query: (payload) => ({
-                url: `cart/add/${payload.userId}`,
+                url: `cart/add/`,
                 method: 'POST',
                 body: {product: payload.id, size: payload.size}
             }),
@@ -51,7 +53,7 @@ export const mainApi = createApi({
         }),
         deleteCartProduct: build.mutation({
             query: (payload) => ({
-                url: `cart/delete/${payload.userId}`,
+                url: `cart/delete/`,
                 method: 'DELETE',
                 body: {product: payload.id}
             }),
@@ -59,7 +61,7 @@ export const mainApi = createApi({
         }),
         adjustProductCartQuantity: build.mutation({
             query: (payload) => ({
-                url: `cart/update/${payload.userId}`,
+                url: `cart/update/`,
                 method: 'PUT',
                 body: {product: payload.product, quantity: payload.cartQuantity}
             }),
@@ -91,20 +93,20 @@ export const mainApi = createApi({
         }),
         //ORDERS
         getOrders: build.query<IOrders[], string | null>({
-            query: (id) => `orders/${id}`,
+            query: () => `orders/`,
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ _id }) => ({ type: 'Orders' as const, _id })),
-                        { type: 'Orders', id: 'LIST' },
+                        ...result.map(({_id}) => ({type: 'Orders' as const, _id})),
+                        {type: 'Orders', id: 'LIST'},
                     ]
-                    : [{ type: 'Orders', id: 'LIST' }],
+                    : [{type: 'Orders', id: 'LIST'}],
         }),
         addOrder: build.mutation({
-            query: (payload) => ({
-                url: `orders/create/${payload.userId}`,
+            query: (cartId) => ({
+                url: `orders/create/`,
                 method: 'POST',
-                body: {cardId: payload.cartId}
+                body: {cartId}
             }),
             invalidatesTags: [{type: 'Orders', id: 'LIST'}, {type: 'Cart', id: 'LIST'}]
         })

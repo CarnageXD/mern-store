@@ -24,6 +24,7 @@ export default function Header() {
     const dispatch = useAppDispatch();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const cartLength = useAppSelector(state => state.cart.products?.length)
+    const isAdmin = useAppSelector(state => state.auth.role)
     const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
 
     const handleLogout = () => {
@@ -52,11 +53,16 @@ export default function Header() {
                     </Typography>
                     {isAuth ? (
                         <>
-                            <NavLink to="/admin">
-                                <IconButton color="inherit">
-                                    <AdminPanelSettingsOutlined/>
-                                </IconButton>
-                            </NavLink>
+                            {isAdmin === 'ADMIN' ?
+                                <NavLink to="/admin">
+                                    <IconButton color="inherit">
+                                        <AdminPanelSettingsOutlined/>
+                                    </IconButton>
+                                </NavLink>
+                                :
+                                null
+                            }
+
                             <NavLink to="/profile">
                                 <IconButton color="inherit">
                                     <AccountCircleOutlined/>

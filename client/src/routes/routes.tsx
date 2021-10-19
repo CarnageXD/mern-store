@@ -5,9 +5,11 @@ import DetailedProductPage from "../pages/DetailedProductPage";
 import CartPage from "../pages/CartPage";
 import AuthPage from "../pages/AuthPage";
 import AdminPage from "../pages/AdminPage";
+import {useAppSelector} from "../hooks/redux-hooks";
 
 
 export const useRoutes = (isAuthenticated: boolean) => {
+    const isAdmin = useAppSelector(state => state.auth.role)
     if (isAuthenticated) {
         return (
             <Switch>
@@ -23,9 +25,13 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 <Route path='/cart' exact>
                     <CartPage/>
                 </Route>
-                <Route path='/admin' exact>
-                    <AdminPage/>
-                </Route>
+                {isAdmin === 'ADMIN' ?
+                    <Route path='/admin' exact>
+                        <AdminPage/>
+                    </Route>
+                    :
+                    null
+                }
                 <Redirect to='/'/>
             </Switch>
         )
@@ -41,7 +47,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
             <Route path='/detailed/:id'>
                 <DetailedProductPage/>
             </Route>
-            <Redirect to='/' />
+            <Redirect to='/'/>
         </Switch>
     )
 }

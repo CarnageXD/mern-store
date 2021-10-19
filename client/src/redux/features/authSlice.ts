@@ -16,6 +16,7 @@ export const authSlice = createSlice({
             state.id = action.payload.id
             state.name = action.payload.name
             state.token = action.payload.token
+            state.role = action.payload.role
         }
     }
 })

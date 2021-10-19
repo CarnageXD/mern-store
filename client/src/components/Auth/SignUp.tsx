@@ -87,6 +87,7 @@ const SignUp: React.FC<IToggleAuth> = ({toggle}) => {
                                     minLength: {value: 6, message: "Password min length should be 6 "}
                                 })}
                                 fullWidth
+                                type="password"
                                 label="Password"
                                 id="password"
                             />

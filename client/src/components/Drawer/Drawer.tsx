@@ -6,13 +6,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {
-    AccountCircleOutlined,
-    ExitToAppOutlined,
-    HelpOutlineOutlined,
-    LoginOutlined,
-    ShoppingCartOutlined
-} from "@mui/icons-material";
+import {AccountCircleOutlined, ExitToAppOutlined, LoginOutlined, ShoppingCartOutlined} from "@mui/icons-material";
 import {Typography} from "@mui/material";
 import {NavLink} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
@@ -72,7 +66,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                         <ShoppingCartOutlined/>
                                     </ListItemIcon>
                                     <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
-                                        Bag
+                                        Cart
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
@@ -96,16 +90,6 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                                     </ListItemIcon>
                                     <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
                                         Login
-                                    </ListItemText>
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to="/support" onClick={toggleDrawer}>
-                                <ListItem button style={{padding: '1rem .2rem'}}>
-                                    <ListItemIcon>
-                                        <HelpOutlineOutlined/>
-                                    </ListItemIcon>
-                                    <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
-                                        Support
                                     </ListItemText>
                                 </ListItem>
                             </NavLink>
