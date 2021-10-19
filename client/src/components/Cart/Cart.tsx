@@ -16,14 +16,13 @@ const Cart: React.FC<{ products: ICartProduct[]; cartId: string | null }> = ({
     const dispatch = useAppDispatch();
     const summaryPrice = getTotal(products, 'total')
     const summaryQuantity = getTotal(products, 'quantity')
-
     const [addOrder] = useAddOrderMutation();
     const handleAddingOrder = async () => {
-        dispatch(setCart({products: [], cartId: null}))
         addOrder(cartId).unwrap()
             .then(payload => {
                 window.location = payload
                 dispatch(setInfoSnackbar("Payment is processing"))
+                dispatch(setCart({products: [], cartId: null}))
             })
             .catch(e => dispatch(setErrorSnackbar(e.data.message)))
     };

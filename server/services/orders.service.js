@@ -26,7 +26,6 @@ class OrdersService {
             success_url: `${process.env.CLIENT_URL}profile`,
             cancel_url: `${process.env.CLIENT_URL}cart`,
         })
-        console.log(session)
         await Orders.create({userId, products: cart.products});
         await Cart.deleteOne({userId});
         return session.url
