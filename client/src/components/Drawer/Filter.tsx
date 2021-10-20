@@ -11,9 +11,10 @@ import FilterSelect from "../Select/FilterSelect";
 
 interface FilterPropsType {
     setFilters: Dispatch<SetStateAction<IProductFilters>>
+    setPage: Dispatch<SetStateAction<number>>
 }
 
-const Filter: React.FC<FilterPropsType> = ({setFilters}) => {
+const Filter: React.FC<FilterPropsType> = ({setFilters, setPage}) => {
     const [isOpen, setIsOpen] = useState(false)
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(0)
@@ -26,6 +27,13 @@ const Filter: React.FC<FilterPropsType> = ({setFilters}) => {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         setFilters({min, max, category})
+        setPage(1)
+    }
+
+    const handleClearFilter = () => {
+        setMin(0)
+        setMax(0)
+        setFilters({})
     }
 
     return (
@@ -71,7 +79,10 @@ const Filter: React.FC<FilterPropsType> = ({setFilters}) => {
                         />
                     </Box>
                     <Divider/>
-                    <Button onClick={() => setIsOpen(false)} type="submit"
+                    <Button name="clear" onClick={() => handleClearFilter()}
+                            style={{padding: 4, marginTop: 12, width: '100%'}}
+                            size="large">Clear filter</Button>
+                    <Button name="search" onClick={() => setIsOpen(false)} type="submit"
                             style={{padding: 4, marginTop: 12, width: '100%'}}
                             size="large">SEARCH</Button>
                 </Box>

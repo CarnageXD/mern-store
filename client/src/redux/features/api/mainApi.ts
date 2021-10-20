@@ -4,12 +4,13 @@ import {IProduct, IProductsResponse, IQueryGetProduct} from "../../../types/Prod
 import {ICartResponse} from "../../../types/Cart/cart";
 import {IOrders} from "../../../types/Orders/orders";
 import {RootState} from "../../store";
+import {API_URL} from "../../../config";
 
 export const mainApi = createApi({
     reducerPath: 'mainApi',
     tagTypes: ['Cart', 'Orders', 'Products'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/',
+        baseUrl: `${API_URL}api/` || 'http://localhost:5000/api',
         prepareHeaders(headers, {getState}) {
             const token = (getState() as RootState).auth.token
             headers.set('Authorization', `Bearer ${token}`)

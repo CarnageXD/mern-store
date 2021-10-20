@@ -9,7 +9,6 @@ type CustomSelectProps = {
 const SortSelect: React.FC<CustomSelectProps> = ({setValue}) => {
     return (
         <CustomSelect label="Filter" setValue={setValue}>
-            <MenuItem sx={{display: 'flex !important'}} value="undefined">All</MenuItem>
             <MenuItem sx={{display: 'flex !important'}} value="Lifestyle">Lifestyle</MenuItem>
             <MenuItem sx={{display: 'flex !important'}} value="Running">Running</MenuItem>
             <MenuItem sx={{display: 'flex !important'}} value="Basketball">Basketball</MenuItem>

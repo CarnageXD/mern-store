@@ -1,7 +1,7 @@
 const Orders = require("./../models/orders.model");
 const Cart = require("./../models/cart.model");
-require('dotenv').config()
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+const config = require('config')
+const stripe = require("stripe")(config.get("STRIPE_PRIVATE_KEY"))
 
 class OrdersService {
     async addOrder(userId) {

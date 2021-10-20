@@ -1,12 +1,8 @@
 import React from 'react';
 import {Box, Container, Typography} from "@mui/material";
 import {Facebook, Instagram, Telegram, Twitter, YouTube} from "@mui/icons-material";
-import {useAppSelector} from "../../hooks/redux-hooks";
 
 const Footer = () => {
-    const isAuth = !!useAppSelector(state => state.auth.token)
-
-    if (!isAuth) return null
     return (
         <Box sx={{backgroundColor: "#efefef"}}>
             <Container>

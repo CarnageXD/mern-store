@@ -5,6 +5,7 @@ import {ICartProduct} from "../../types/Cart/cart";
 import {useAdjustProductCartQuantityMutation, useDeleteCartProductMutation,} from "../../redux/features/api/mainApi";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
 import {setSuccessSnackbar} from "../../redux/features/snackbarSlice";
+import { API_URL } from "../../config";
 
 const CartItem: React.FC<ICartProduct> = ({product, quantity, total, size, _id}) => {
   const [cartQuantity, setCartQuantity] = useState(quantity);
@@ -50,7 +51,7 @@ const CartItem: React.FC<ICartProduct> = ({product, quantity, total, size, _id})
         <img
           width={100}
           height={100}
-          src={process.env.REACT_APP_API_URL + product.image}
+          src={API_URL + product.image}
           alt="product"
         />
         <Box ml={1}>

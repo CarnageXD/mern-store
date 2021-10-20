@@ -12,12 +12,11 @@ const Products = () => {
     const [searchValue, setSearchValue] = useState('')
     const [sortValue, setSortValue] = useState('Newest')
     const [filters, setFilters] = useState({} as IProductFilters)
+    const portionSize = 6
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
-
-    const portionSize = 6
 
     const {data = {} as IProductsResponse, isLoading} = useGetProductsQuery(
         {limit: portionSize, page: page, order: sortValue, filters});
@@ -30,7 +29,7 @@ const Products = () => {
                 <Search value={searchValue} setValue={setSearchValue}/>
                 <Box mt={2} display="flex" alignItems="center" justifyContent="space-between">
                     <SortSelect setValue={setSortValue}/>
-                    <Filter setFilters={setFilters}/>
+                    <Filter setPage={setPage} setFilters={setFilters}/>
                 </Box>
             </Box>
 
@@ -42,18 +41,14 @@ const Products = () => {
                                 <ProductItem key={product._id} {...product} />
                             ))
                         :
-                        <Typography gutterBottom variant="h5">No products</Typography>
+                        <Typography sx={{pl: '1.5rem'}} gutterBottom variant="h5">No products</Typography>
                 }
             </Grid>
 
-            {
-                data.items.length > 0 ?
-                    <Pagination sx={{mb: 4, mt: 4}} page={page} onChange={handlePageChange} size={"large"}
-                                count={Math.ceil(data.totalItems / portionSize)} showFirstButton
-                                showLastButton/>
-                    :
-                    null
-            }
+            <Pagination sx={{mb: 4, mt: 4}} page={page} onChange={handlePageChange} size={"large"}
+                        count={Math.ceil(data.totalItems / portionSize)}
+                        showFirstButton
+                        showLastButton/>
 
         </Box>
     );
