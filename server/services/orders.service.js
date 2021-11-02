@@ -23,16 +23,23 @@ class OrdersService {
                     quantity: storeItem.quantity,
                 }
             }),
-            success_url: `${process.env.CLIENT_URL}profile`,
-            cancel_url: `${process.env.CLIENT_URL}cart`,
+            success_url: `${config.get("CLIENT_URL")}profile`,
+            cancel_url: `${config.get("CLIENT_URL")}cart`,
         })
-        await Orders.create({userId, products: cart.products});
+        await Orders.create({userId, products: cart.products, orderSessionId: session.id});
         await Cart.deleteOne({userId});
         return session.url
     }
 
     async getOrders(userId) {
-        return Orders.find({userId}).populate("products.product");
+        const orders = await Orders.find({userId}).populate("products.product")
+        const ordersWithPaymentStatus = []
+        for (let i = 0; i < orders.length; i++) {
+            const session = await stripe.checkout.sessions.retrieve(orders[i].orderSessionId)
+            const paymentStatus = {paymentStatus: session.payment_status}
+            ordersWithPaymentStatus.push({...orders[i]._doc, ...paymentStatus})
+        }
+        return ordersWithPaymentStatus;
     }
 }
 

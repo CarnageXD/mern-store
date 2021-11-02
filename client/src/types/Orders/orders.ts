@@ -11,6 +11,7 @@ export interface IOrders {
     _id: string
     products: IOrderItem[],
     orderTime: string,
+    paymentStatus: string,
 }
 
 export interface IOrderItem {

@@ -13,7 +13,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
     if (isAuthenticated) {
         return (
             <Switch>
-                <Route path='/' exact>
+                <Route path='/products' exact>
                     <ProductsPage/>
                 </Route>
                 <Route path='/profile' exact>
@@ -32,7 +32,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
                     :
                     null
                 }
-                <Redirect to='/'/>
+                <Redirect to='/products'/>
             </Switch>
         )
     }

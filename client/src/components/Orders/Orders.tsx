@@ -10,6 +10,7 @@ const Orders = () => {
     const userId = useAppSelector((state) => state.auth.id);
     const {data = [], isLoading} = useGetOrdersQuery(userId);
     const orders = data.slice().reverse()
+    console.log(orders)
     const summaryCardData = getTotalOrders(data);
     if (isLoading) return <CircularProgress color="primary"/>;
     return (

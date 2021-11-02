@@ -2,20 +2,19 @@ require('dotenv').config()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const express = require('express')
+const path = require('path')
 const AuthRouter = require('./routes/auth.routes')
 const ProductRouter = require('./routes/product.routes')
 const CartRouter = require('./routes/cart.routes')
 const OrdersRouter = require('./routes/orders.routes')
 const config = require('config')
-const path = require('path')
-
 
 const app = express()
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5001
 
 app.use(express.static(__dirname));
-app.use(express.static(path.resolve(__dirname, 'files')))
+app.use(express.static(path.resolve(__dirname, "files")));
 app.use(cors())
 app.use(express.json())
 app.use('/api/auth', AuthRouter)

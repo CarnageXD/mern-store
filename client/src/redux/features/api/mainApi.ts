@@ -10,7 +10,7 @@ export const mainApi = createApi({
     reducerPath: 'mainApi',
     tagTypes: ['Cart', 'Orders', 'Products'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${API_URL}api/` || 'http://localhost:5000/api',
+        baseUrl: `${API_URL}api/` || 'http://localhost:5001/api',
         prepareHeaders(headers, {getState}) {
             const token = (getState() as RootState).auth.token
             headers.set('Authorization', `Bearer ${token}`)

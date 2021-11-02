@@ -55,7 +55,12 @@ export default function Header() {
                         <>
                             {isAdmin === 'ADMIN' ?
                                 <NavLink to="/admin">
-                                    <IconButton color="inherit">
+                                    <IconButton sx={{
+                                        display: {
+                                            xs: "none !important",
+                                            md: "flex !important",
+                                        },
+                                    }} color="inherit">
                                         <AdminPanelSettingsOutlined/>
                                     </IconButton>
                                 </NavLink>
@@ -64,12 +69,22 @@ export default function Header() {
                             }
 
                             <NavLink to="/profile">
-                                <IconButton color="inherit">
+                                <IconButton sx={{
+                                    display: {
+                                        xs: "none !important",
+                                        md: "flex !important",
+                                    },
+                                }} color="inherit">
                                     <AccountCircleOutlined/>
                                 </IconButton>
                             </NavLink>
                             <NavLink to="/cart">
-                                <IconButton color="inherit">
+                                <IconButton sx={{
+                                    display: {
+                                        xs: "none !important",
+                                        md: "flex !important",
+                                    },
+                                }} color="inherit">
                                     <Badge badgeContent={cartLength} color="primary">
                                         <ShoppingCartOutlined/>
                                     </Badge>

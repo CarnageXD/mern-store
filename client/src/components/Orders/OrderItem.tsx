@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, ListItemIcon, ListItemText} from "@mui/material";
 import {IOrderItem} from "../../types/Orders/orders";
+import { API_URL } from '../../config';
 
 
 const OrderItem: React.FC<IOrderItem> = ({product, quantity, total}) => {
@@ -8,7 +9,7 @@ const OrderItem: React.FC<IOrderItem> = ({product, quantity, total}) => {
         <Box width='100%' display="flex" justifyContent="space-between">
             <Box display="flex" alignItems="center">
                 <ListItemIcon>
-                    <img src={process.env.REACT_APP_API_URL + product.image} width={50} height={50}
+                    <img src={API_URL + product.image} width={50} height={50}
                          alt={"product"}/>
                 </ListItemIcon>
                 <ListItemText primary={product.title}/>

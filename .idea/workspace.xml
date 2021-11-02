@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d580d1-4a38-4460-bd31-801bc00a10a6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mern-store.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mern-store.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cart/CartItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cart/CartItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Drawer/Filter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Drawer/Filter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Products/Products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Products/Products.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/config/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/default.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +83,13 @@
       <workItem from="1634730891984" duration="2269000" />
       <workItem from="1634733451353" duration="17000" />
       <workItem from="1634733470257" duration="56000" />
-      <workItem from="1634733530493" duration="4736000" />
+      <workItem from="1634733530493" duration="12789000" />
+      <workItem from="1635509708885" duration="2547000" />
+      <workItem from="1635514493625" duration="757000" />
+      <workItem from="1635516635655" duration="229000" />
+      <workItem from="1635516912131" duration="378000" />
+      <workItem from="1635517350602" duration="20554000" />
+      <workItem from="1635847506730" duration="1307000" />
     </task>
     <servers />
   </component>
@@ -104,6 +99,31 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="4fa3d932-0545-4522-9fa2-f300c72803c0">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/carnagexd/Personal/Study/programming/projects/mern/mern-store/.idea" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -121,6 +141,11 @@
             </State>
           </value>
         </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="4fa3d932-0545-4522-9fa2-f300c72803c0" value="TOOL_WINDOW" />
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />

@@ -6,8 +6,8 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {AccountCircleOutlined, ExitToAppOutlined, LoginOutlined, ShoppingCartOutlined} from "@mui/icons-material";
-import {Typography} from "@mui/material";
+import {AccountCircleOutlined, AdminPanelSettingsOutlined, ExitToAppOutlined, LoginOutlined, ShoppingCartOutlined} from "@mui/icons-material";
+import {Badge, Typography} from "@mui/material";
 import {NavLink} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
 import {setCredentials} from "../../redux/features/authSlice";
@@ -18,7 +18,10 @@ type TemporaryDrawerType = {
 }
 
 const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) => {
+    const cartLength = useAppSelector(state => state.cart.products?.length)
     const isAuth = !!(useAppSelector(state => state.auth.token));
+    const isAdmin = useAppSelector(state => state.auth.role)
+
     const dispatch = useAppDispatch()
     const handleLogout = () => {
         localStorage.removeItem('authData')
@@ -50,6 +53,20 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                 <List sx={{paddingLeft: 2}}>
                     {isAuth ?
                         <>
+                            {isAdmin === "ADMIN" ?
+                                <NavLink to="/admin" onClick={toggleDrawer}>
+                                    <ListItem button style={{padding: '1rem .2rem'}}>
+                                        <ListItemIcon>
+                                            <AdminPanelSettingsOutlined/>
+                                        </ListItemIcon>
+                                        <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
+                                            Admin
+                                        </ListItemText>
+                                    </ListItem>
+                                </NavLink>
+                                :
+                                null
+                            }
                             <NavLink to="/profile" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
@@ -63,7 +80,10 @@ const TemporaryDrawer: React.FC<TemporaryDrawerType> = ({isOpen, toggleDrawer}) 
                             <NavLink to="/cart" onClick={toggleDrawer}>
                                 <ListItem button style={{padding: '1rem .2rem'}}>
                                     <ListItemIcon>
+                                        <Badge badgeContent={cartLength} color="primary">
+
                                         <ShoppingCartOutlined/>
+                                        </Badge>
                                     </ListItemIcon>
                                     <ListItemText disableTypography sx={{fontSize: '1.3rem'}}>
                                         Cart

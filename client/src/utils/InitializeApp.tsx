@@ -28,7 +28,7 @@ const InitializeApp = () => {
         if (isAuth && data) {
             dispatch(setCart({products: data.products, cartId: data.id}))
         }
-    }, [data, dispatch, isAuth])
+    }, [data, dispatch, isAuth, lsValue])
 
     const routes = useRoutes(!!isAuth);
 

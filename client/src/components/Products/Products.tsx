@@ -12,7 +12,7 @@ const Products = () => {
     const [searchValue, setSearchValue] = useState('')
     const [sortValue, setSortValue] = useState('Newest')
     const [filters, setFilters] = useState({} as IProductFilters)
-    const portionSize = 6
+    const portionSize = 9
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);

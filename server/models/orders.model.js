@@ -10,6 +10,7 @@ const OrderSchema = new Schema({
       total: { type: Number, required: true },
     },
   ],
+  orderSessionId: {type: String}
 });
 
 module.exports = model("Order", OrderSchema);

@@ -2,5 +2,5 @@
   "MONGO": "mongodb+srv://carnage:carnage2001@cluster0.5lbnm.mongodb.net/mern-store?retryWrites=true&w=majority",
   "SECRET": "carnage",
   "STRIPE_PRIVATE_KEY": "sk_test_51Jkv9jAji3gPFY2cnXIz4rvv2YhekKFlxGeV6gTK8PYGFDUfQE7inpw6yL1f7bW5uzwwj10XFHqYAJbmIsnA1LeZ008pl8nvHj",
-  "CLIENT_URL": "https://localhost:3000/"
+  "CLIENT_URL": "https://carnagexd.github.io/mern-store-client/#/"
 }
